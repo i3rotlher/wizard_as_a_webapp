@@ -3,24 +3,28 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# An example controller showing a sample home page
-GET     /                           controllers.HomeController.index()
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /hi/:name                        controllers.HomeController.hi(name: String)
+GET     /                           controllers.WizardController.index()
 
 
 
 # POST ROUTES
 
-POST    /playerCount?count=X        controllers.WiazardController.setPlayerCount(count: Int)
+POST    /playerCount        controllers.WizardController.setPlayerCount(count: Int)
+#GET     /playerCount
 
-POST    /playerName?name=X          controllers.WiazardController.setName(name: String)
+POST    /playerName         controllers.WizardController.setName(name: String)
+#GET     /playerName
 
-POST    /trump?color=X              controllers.WiazardController.setTrump(color: String)
+POST    /trump              controllers.WizardController.setTrump(color: String)
+#GET     /trump
 
-POST    /setTrickAmount?amount=X    controllers.WiazardController.setTrickAmount(amount: Int)
+POST    /setTrickAmount     controllers.WizardController.setTrickAmount(amount: Int)
+#GET     /setTrickAmount
 
-POST    /playCard=?idx=X            controllers.WiazardController.playCard(idx: Int)
+POST    /playCard           controllers.WizardController.playCard(idx: Int)
+GET     /playCard           controllers.WizardController.playCardView()
+
+GET     /wizard             controllers.WizardController.wizard()

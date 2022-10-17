@@ -21,4 +21,6 @@ libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-assistedinject" % "5.1.0"
 )
 
+libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0"
+
 unmanagedBase := baseDirectory.value / "lib"
