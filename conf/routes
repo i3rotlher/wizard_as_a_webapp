@@ -13,7 +13,7 @@ GET     /                           controllers.WizardController.index()
 # POST ROUTES
 
 POST    /playerCount        controllers.WizardController.setPlayerCount(count: Int)
-#GET     /playerCount
+GET     /playerCount        controllers.WizardController.getPlayerCountView()
 
 POST    /playerName         controllers.WizardController.setName(name: String)
 #GET     /playerName

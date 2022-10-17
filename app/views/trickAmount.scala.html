@@ -1,6 +1,7 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @(player: Player)
 
+<div>How many tricks are you goingto make @player.name ?</div>
 <div>@player.name 's cards:</div>
 <ul>
 @for(card <- player.hand) {
@@ -10,4 +11,4 @@
 }
 </ul>
 
-<div>To Play a Card click the card</div>
+<div>To set trickamount call POST: localhost:9000/setTrickAmount?amount=XY</div>

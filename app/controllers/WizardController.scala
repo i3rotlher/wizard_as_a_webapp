@@ -51,23 +51,35 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   def setName(name: String) = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
+
   def setPlayerCount(count: Int) = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    controller.set_player_amount(Option(count))
+    Redirect("/setPlayercount")
   }
+  def getPlayerCountView()  = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.playerCount())
+  }
+
   def setTrump(color: String) = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
-  def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
-  }
 
+  def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
+    controller.set_guess(amount)
+    Redirect("/setTrickAmount")
+  }
+  def getTrickAmountView() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx())))
+  }
 
   def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>
-    // controller.showCards(idx)
+    controller.play_card(controller.get_player(controller.active_player_idx()).hand(idx))
+    //if last player redirect to tick over
     Redirect("/playCardView")
+
   }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.playCard("max", List(Cards.all_cards(0), Cards.all_cards(1))))
+    Ok(views.html.showCards(controller.get_player(controller.active_player_idx())))
   }
 
 }
