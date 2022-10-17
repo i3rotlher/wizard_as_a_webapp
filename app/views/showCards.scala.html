@@ -5,7 +5,7 @@
 <ul>
 @for(card <- player.hand) {
     <li>
-        <a href="localhost:9000/showCards?idx={{@player.hand.indexOf(card)}}">@card.toString()</a>
+        <a href="/showCards?idx=@player.hand.indexOf(card)">@card.toString()</a>
     </li>
 }
 </ul>

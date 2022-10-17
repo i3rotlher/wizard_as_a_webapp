@@ -46,37 +46,39 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     } else {
       System.out.println("Laeuft schon")
     }
-    Ok(<div>hi</div>)
+    Redirect("/playerCount")
   }
   def setNameView()=Action{
-    implicit request: Request[AnyContent]=>
-      Ok(views.html.enternameview())
+      Ok(views.html.enternameview(controller.active_player_idx()))
   }
   def setName(name: String) = Action {
         controller.create_player(name)
         // hier wenn letzter Spieler weiterleiten an generate Hands
-    implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
 
   def setPlayerCount(count: Int) = Action { implicit request: Request[AnyContent] =>
     controller.set_player_amount(Option(count))
-    Redirect("/setPlayercount")
+    Ok(views.html.playerCount())
   }
   def getPlayerCountView()  = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.playerCount())
   }
 
   def setTrump(color: String) = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    controller.wish_trump(color)
+    Redirect("/trump")
+  }
+  def getTrump() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.trump(controller.get_player(controller.active_player_idx())))
   }
 
   def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
     controller.set_guess(amount)
     Redirect("/setTrickAmount")
   }
-  def getTrickAmountView() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx())))
+  def getTrickAmount() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card))
   }
 
   def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>

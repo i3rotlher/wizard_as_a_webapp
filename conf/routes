@@ -19,10 +19,10 @@ POST    /playerName         controllers.WizardController.setName(name: String)
 GET     /playerName         controllers.WizardController.setNameView()
 
 POST    /trump              controllers.WizardController.setTrump(color: String)
-#GET     /trump
+GET     /trump              controllers.WizardController.getTrump()
 
 POST    /setTrickAmount     controllers.WizardController.setTrickAmount(amount: Int)
-#GET     /setTrickAmount
+GET     /setTrickAmount     controllers.WizardController.getTrickAmount()
 
 POST    /playCard           controllers.WizardController.playCard(idx: Int)
 GET     /playCard           controllers.WizardController.playCardView()

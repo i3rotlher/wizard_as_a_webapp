@@ -1,0 +1,19 @@
+@import de.htwg.se.wizard.model.cardsComponent.Card
+@import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
+@(player: Player)
+
+<div>@player.name 's cards:</div>
+<ul>
+@for(card <- player.hand) {
+    <li>
+        <div>Index: player.hand.indexOf(card)</div>
+        <div>card.toString()</div>
+    </li>
+}
+</ul>
+
+<div>To set the Trump Card Click on the Colour: </div>
+<a href="/trump?color=yellow"> Yellow</a>
+<a href="/trump?color=green"> Green</a>
+<a href="/trump?color=blue"> Blue</a>
+<a href="/trump?color=red"> Red</a>

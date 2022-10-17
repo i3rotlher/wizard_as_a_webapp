@@ -1,7 +1,4 @@
-@()
+@(idx: Int)
 
-@main("Enter your Playername") {
-  <h1>Welcome to Wizard!</h1>
-  To enter your name replace X in this request with your name: POST http://127.0.0.1:9000/playerName?name=X
-
-}
+<div>To enter your name player @idx replace X in this request with your name: POST localhost:9000/playerName?name=X
+</div>

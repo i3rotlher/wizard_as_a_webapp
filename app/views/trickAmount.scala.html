@@ -1,14 +1,17 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-@(player: Player)
+@import de.htwg.se.wizard.model.cardsComponent.Card
+@(player: Player, trump: Card)
 
 <div>How many tricks are you goingto make @player.name ?</div>
 <div>@player.name 's cards:</div>
 <ul>
 @for(card <- player.hand) {
     <li>
-        <a href="localhost:9000/showCards?idx={{@player.hand.indexOf(card)}}">@card.toString()</a>
+        <a href="/showCards?idx={{@player.hand.indexOf(card)}}">@card.toString()</a>
     </li>
 }
 </ul>
+<div>Trump Card:</div>
+<div>@trump.toString()</div>
 
 <div>To set trickamount call POST: localhost:9000/setTrickAmount?amount=XY</div>
