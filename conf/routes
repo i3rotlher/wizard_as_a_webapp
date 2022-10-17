@@ -16,7 +16,7 @@ POST    /playerCount        controllers.WizardController.setPlayerCount(count: I
 #GET     /playerCount
 
 POST    /playerName         controllers.WizardController.setName(name: String)
-#GET     /playerName
+GET     /playerName         controllers.WizardController.setNameView()
 
 POST    /trump              controllers.WizardController.setTrump(color: String)
 #GET     /trump
