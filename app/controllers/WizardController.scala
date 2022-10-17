@@ -48,7 +48,14 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     }
     Ok(<div>hi</div>)
   }
-  def setName(name: String) = Action { implicit request: Request[AnyContent] =>
+  def setNameView()=Action{
+    implicit request: Request[AnyContent]=>
+      Ok(views.html.enternameview())
+  }
+  def setName(name: String) = Action {
+        controller.create_player(name)
+        // hier wenn letzter Spieler weiterleiten an generate Hands
+    implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
 
