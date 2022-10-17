@@ -10,3 +10,17 @@ GET     /                           controllers.HomeController.index()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET     /hi/:name                        controllers.HomeController.hi(name: String)
+
+
+
+# POST ROUTES
+
+POST    /playerCount?count=X        controllers.WiazardController.setPlayerCount(count: Int)
+
+POST    /playerName?name=X          controllers.WiazardController.setName(name: String)
+
+POST    /trump?color=X              controllers.WiazardController.setTrump(color: String)
+
+POST    /setTrickAmount?amount=X    controllers.WiazardController.setTrickAmount(amount: Int)
+
+POST    /playCard=?idx=X            controllers.WiazardController.playCard(idx: Int)
