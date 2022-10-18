@@ -26,8 +26,9 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   val controller = Controller(Gamestate(), Impl_JSON())
   val tui = new TUI(controller)
   val gui = new SwingGUI(controller)
+  @Singleton
   val thread = new Thread {
-    override def run {
+    override def run: Unit = {
       controller.publish(new game_started)
       do {
         val input = scala.io.StdIn.readLine()
@@ -36,8 +37,8 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     }
   }
 
-
   def index() = Action { implicit request: Request[AnyContent] =>
+    System.out.println(thread.getName)
     Ok(views.html.index())
   }
   def wizard() = Action { implicit request: Request[AnyContent] =>
@@ -89,6 +90,10 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.showCards(controller.get_player(controller.active_player_idx())))
+  }
+
+  def howTo() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.howToPlay())
   }
 
 }
