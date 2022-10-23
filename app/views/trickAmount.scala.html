@@ -1,17 +1,36 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @(player: Player, trump: Card)
-
-<div>How many tricks are you goingto make @player.name ?</div>
-<div>@player.name 's cards:</div>
+@main("trickAmount") {
+<h1>How many tricks are you going to make @player.name ?</h1>
+<h2>@player.name 's cards:</h2>
 <ul>
 @for(card <- player.hand) {
     <li>
-        <a href="/showCards?idx={{@player.hand.indexOf(card)}}">@card.toString()</a>
+        <div>@card.toString()</div>
     </li>
 }
 </ul>
-<div>Trump Card:</div>
+<h2>Trump Card:</h2>
 <div>@trump.toString()</div>
 
-<div>To set trickamount call POST: localhost:9000/setTrickAmount?amount=XY</div>
+<input type="number" id="tricks" value="0" onkeydown="setTricks(this.value)">
+
+<script>
+        function setTricks(tricks) {
+            if (this.event.key === "Enter") {
+                fetch(`http://localhost:9000/setTrickAmount?amount=${tricks}`, {
+                    method: "POST",
+                    body: ""
+                }).then(res => {
+                    if(res.redirected) {
+                        window.location.replace(res.url)
+                    } else {
+                        window.location.replace(`http://localhost:9000/setTrickAmount`);
+                    }
+                });
+            }
+        }
+
+</script>
+}

@@ -1,13 +1,25 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @(player: Player)
-
-<div>@player.name 's cards:</div>
+@main("showCards"){
+<h1>@player.name 's cards:</h1>
 <ul>
-@for(card <- player.hand) {
+    @for(card <- player.hand) {
     <li>
-        <a href="/showCards?idx=@player.hand.indexOf(card)">@card.toString()</a>
+        <div style="cursor: pointer;" onclick="playCard(@player.hand.indexOf(card))">@card.toString()</div>
     </li>
-}
+    }
 </ul>
 
-<div>To Play a Card click the card</div>
+<h2>To Play a Card click the card</h2>
+
+    <script>
+        function playCard(idx) {
+            fetch(`http://localhost:9000/playCard?idx=${idx}`, {
+                method: "POST",
+                body: ""
+            }).then(res => {
+                window.location.replace(res.url)
+            });
+        }
+    </script>
+}

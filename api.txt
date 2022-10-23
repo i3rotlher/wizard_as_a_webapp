@@ -1,0 +1,37 @@
+Routes:
+
+		Hello World ....   	[GET /wizard]
+		+ SpielerAzahl
+										
+		SpielerAnzahl   	 	[POST /playerCount?count=X]
+			1. SpielerName.html
+	
+		SpielerName			 	[POST /playerName?name=X]
+		// SpielerName(zurück)	[PUT /playerNameUndo]
+		// SpielerName(vor)	[PUT /playerNameDo]
+
+			1. (wenn noch SPieler) SpielerName.html
+			2. generating Cards	  GeneratingCards.html
+										  StichAnzahl.html
+
+		TrumpfSetzen			[POST /trump?color=X]					
+			Stichanzahl.html
+			
+		Stichanzahl				[POST /setTrickAmount?amount=X]
+		
+			1. (wenn noch SPieler) StichAznahl.html
+			2. 
+		
+		KarteSpielen			[POST /playCard=?idx=X]
+
+		
+		---------------- GET ------------------------------
+
+		Hand
+		SpielerName
+		Tabelle
+		TrumpfKarte / FARBE
+		PlayedCards
+		
+		GeneratingCards (Animation)
+		

@@ -24,3 +24,7 @@ libraryDependencies ++= Seq(
 libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0"
 
 unmanagedBase := baseDirectory.value / "lib"
+
+libraryDependencies ++= Seq(
+  ws
+)

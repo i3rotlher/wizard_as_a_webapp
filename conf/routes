@@ -30,3 +30,7 @@ GET     /playCard           controllers.WizardController.playCardView()
 GET     /wizard             controllers.WizardController.wizard()
 
 GET     /howToPlay          controllers.WizardController.howTo()
+
+GET     /trickOver           controllers.WizardController.trickOver()
+
+GET     /roundOver          controllers.WizardController.roundOver()
