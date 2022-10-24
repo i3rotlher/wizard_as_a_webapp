@@ -1,16 +1,16 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-@(player: Player, card_images: List[String])
+@(player: Player, getCardPath: GetCardPath.type)
 @main("showCards"){
 <h1>@player.name 's cards:</h1>
-<ul style="display: inline-block; list-style: none;">
+<ul style="list-style: none;">
     @for(card <- player.hand) {
-    <li>
+    <li style="padding-right: 15px; display: inline; border-radius: 15px">
         <img style="cursor: pointer; width: 175px" onclick="playCard(@player.hand.indexOf(card))"
-         src="@routes.Assets.versioned(card_images(player.hand.indexOf(card)))">
+         src="@routes.Assets.versioned(getCardPath.getCardPath(card))">
     </li>
     }
 </ul>
-
+<br>
 <h2>To Play a Card click the card</h2>
 
     <script>

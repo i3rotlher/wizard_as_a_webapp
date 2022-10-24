@@ -7,16 +7,14 @@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
-<html lang="en" style="height: 100%; background-image:url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=170667a&w=0&h=b872CvcwkF1FL0g7oFR0q08VDhvKykyGqI3PzXjU-XI=); background-repeat: no-repeat; background-size: 100% 100%; height: 100%  ">
-@*    <head >*@
+<html lang="en" style="min-height:100%;background-image:url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=170667a&w=0&h=b872CvcwkF1FL0g7oFR0q08VDhvKykyGqI3PzXjU-XI=); background-repeat: no-repeat; background-size: 100% 100%">@*    <head >*@
 @*        *@@* Here's where we render the page title `String`. *@
 @*        <title>@title</title>*@
 @*        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">*@
 @*        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">*@
 
 @*    </head>*@
-    <body>
-        @* And here's where we render the `Html` object containing
+    <body>      @* And here's where we render the `Html` object containing
          * the page content. *@
         @content
 

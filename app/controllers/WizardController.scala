@@ -52,6 +52,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def setTrump(color: String) = Action { implicit request: Request[AnyContent] =>
+    controller.setGamestate(controller.getGamestate().set_active_player_idx(controller.active_player_idx()+1))
     controller.wish_trump(color)
     Redirect("/setTrickAmount")
   }
@@ -70,7 +71,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     }
   }
   def getTrickAmount() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card))
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath))
   }
 
   def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>
@@ -80,6 +81,8 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
       val next_round = controller.getGamestate().getRound_number
       if (round != next_round) {
         Redirect("/roundOver")
+      } else if (wui.getState().isInstanceOf[card_not_playable]) {
+        Redirect("/playCard")
       } else {
         Redirect("/trickOver")
       }
@@ -89,11 +92,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 
   }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
-    var paths = List[String]()
-    for (card <- controller.get_player(controller.active_player_idx()).hand) {
-      paths = paths:+getCardPath(card)
-    }
-    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), paths))
+    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath))
   }
 
   def howTo() = Action { implicit request: Request[AnyContent] =>
@@ -109,19 +108,20 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     Ok(views.html.roundOver(controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
       controller.getGamestate().getPlayers,trump))
   }
+}
 
-  def getCardPath(card: Card): String =  {
+object GetCardPath {
+  def getCardPath(card: Card): String = {
     var result = "/images/card-images/";
     if (card.num == 0) {
-      result += card.colour.substring(card.colour.indexOf('(')+1, card.colour.indexOf(')'))
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
       return result + "-fool.png"
     }
     if (card.num == 14) {
-      result += card.colour.substring(card.colour.indexOf('(')+1, card.colour.indexOf(')'))
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
       return result + "-wizard.png"
     }
     result += card.colour
     result + card.num + ".png"
   }
-
 }

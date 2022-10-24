@@ -1,20 +1,23 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @import de.htwg.se.wizard.model.cardsComponent.Card
-@(player: Player, trump: Card)
+@(player: Player, trump: Card, getCardPath: GetCardPath.type)
 @main("trickAmount") {
 <h1>How many tricks are you going to make @player.name ?</h1>
 <h2>@player.name 's cards:</h2>
-<ul>
-@for(card <- player.hand) {
-    <li>
-        <div>@card.toString()</div>
-    </li>
-}
-</ul>
+    <ul style="list-style: none;">
+    @for(card <- player.hand) {
+        <li style="padding-right: 15px; display: inline;">
+            <img style="cursor: pointer; width: 175px; border-radius: 15px"
+            src="@routes.Assets.versioned(getCardPath.getCardPath(card))">
+        </li>
+    }
+    </ul>
 <h2>Trump Card:</h2>
-<div>@trump.toString()</div>
-
-<input type="number" id="tricks" value="0" onkeydown="setTricks(this.value)">
+    <img style="cursor: pointer; width: 175px; border-radius: 15px; margin-left: 40px"
+    src="@routes.Assets.versioned(getCardPath.getCardPath(trump))">
+<br>
+    <h2>Guess:</h2>
+<input type="number" id="tricks" value="0" min="0" onkeydown="setTricks(this.value)" style="margin-left: 40px">
 
 <script>
         function setTricks(tricks) {
