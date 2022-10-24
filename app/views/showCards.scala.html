@@ -1,15 +1,12 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-@import de.htwg.se.wizard.model.cardsComponent.Card
-@(player: Player)
+@(player: Player, card_images: List[String])
 @main("showCards"){
 <h1>@player.name 's cards:</h1>
-<ul>
+<ul style="display: inline-block; list-style: none;">
     @for(card <- player.hand) {
     <li>
-        <div style="cursor: pointer;" onclick="playCard(@player.hand.indexOf(card))">@card.toString()</div>
-@*        //TODO: Wie kann ich JS im imagetag aufrufen?
-@*        <img style="cursor: pointer;" onclick="playCard(@player.hand.indexOf(card))"*@
-@*        src="@routes.Assets.versioned("../../public/images/Cards/"+ card.colour + card.num + ".png")">*@
+        <img style="cursor: pointer; width: 175px" onclick="playCard(@player.hand.indexOf(card))"
+         src="@routes.Assets.versioned(card_images(player.hand.indexOf(card)))">
     </li>
     }
 </ul>
@@ -24,20 +21,6 @@
             }).then(res => {
                 window.location.replace(res.url)
             });
-        }
-        function getCardPath(Card_num, Card_colour) {
-            result = "public/images/card-images/"
-            result += Card_colour // TODO: für Zauberer und Naren kann vmtl. nicht direkt aus dem Kartenobjekt der Farbwert verwendet werden da bspw. (none(grün))
-            if (Card_num != 0 || Card_num != 14){
-                return result + Card_num + ".png"
-            }
-            if (Card_num == 0) {
-                return result + "-fool.png"
-            }
-            if (Card_num == 14) {
-                return result + "-wizard.png"
-            }
-            return result
-        }
+        };
     </script>
 }

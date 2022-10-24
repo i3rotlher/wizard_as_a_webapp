@@ -4,6 +4,7 @@ import de.htwg.se.wizard.aview.gui.SwingGUI
 import de.htwg.se.wizard.aview.{TUI, WebUI}
 import de.htwg.se.wizard.control.controllerBaseImpl._
 import de.htwg.se.wizard.model.FileIO.JSON.Impl_JSON
+import de.htwg.se.wizard.model.cardsComponent.Card
 import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Gamestate
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
@@ -13,7 +14,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 
   val controller = Controller(Gamestate(), Impl_JSON())
   val tui = new TUI(controller)
-  val gui = new SwingGUI(controller)
+  // val gui = new SwingGUI(controller)
   val wui = new WebUI(controller)
 
   def index() = Action { implicit request: Request[AnyContent] =>
@@ -88,7 +89,11 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 
   }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.showCards(controller.get_player(controller.active_player_idx())))
+    var paths = List[String]()
+    for (card <- controller.get_player(controller.active_player_idx()).hand) {
+      paths = paths:+getCardPath(card)
+    }
+    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), paths))
   }
 
   def howTo() = Action { implicit request: Request[AnyContent] =>
@@ -103,6 +108,20 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     val trump = if (wui.getState().isInstanceOf[set_Wizard_trump]) true else false
     Ok(views.html.roundOver(controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
       controller.getGamestate().getPlayers,trump))
+  }
+
+  def getCardPath(card: Card): String =  {
+    var result = "/images/card-images/";
+    if (card.num == 0) {
+      result += card.colour.substring(card.colour.indexOf('(')+1, card.colour.indexOf(')'))
+      return result + "-fool.png"
+    }
+    if (card.num == 14) {
+      result += card.colour.substring(card.colour.indexOf('(')+1, card.colour.indexOf(')'))
+      return result + "-wizard.png"
+    }
+    result += card.colour
+    result + card.num + ".png"
   }
 
 }
