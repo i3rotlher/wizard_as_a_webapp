@@ -1,19 +1,31 @@
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @(player: Player)
+@main("Trump"){
+    <h1>A Wizard is Trump! You can wish a Trumpcolor @player.name</h1>
+<div>@player.name's cards:</div>
+    <ul>
+    @for(card <- player.hand) {
+        <li>
+            <div>@card.toString()</div>
+        </li>
+    }
+    </ul>
 
-<div>@player.name 's cards:</div>
-<ul>
-@for(card <- player.hand) {
-    <li>
-        <div>Index: player.hand.indexOf(card)</div>
-        <div>card.toString()</div>
-    </li>
+<h2>To set the Trump Card Click on the Colour:</h2>
+    <button style="background-color: yellow" onclick="setTrump('yellow')">Yellow</button><br>
+    <button style="background-color: green" onclick="setTrump('green')">Green</button><br>
+    <button style="background-color: blue" onclick="setTrump('blue')"> Blue</button><br>
+    <button style="background-color: red" onclick="setTrump('red')">Red</button><br>
+    <script>
+            function setTrump(color) {
+                    fetch(`http://localhost:9000/trump?color=${color}`, {
+                        method: "POST",
+                        body: ""
+                    }).then(res => {
+                        window.location.replace(res.url)
+                    });
+            }
+
+    </script>
 }
-</ul>
-
-<div>To set the Trump Card Click on the Colour: </div>
-<a href="/trump?color=yellow"> Yellow</a>
-<a href="/trump?color=green"> Green</a>
-<a href="/trump?color=blue"> Blue</a>
-<a href="/trump?color=red"> Red</a>

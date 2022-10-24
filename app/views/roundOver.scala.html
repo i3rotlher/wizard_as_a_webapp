@@ -1,19 +1,42 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Round
-@(rounds: List[Round], round: Int)
+@(rounds: List[Round], round: Int, players: List[Player], trump: Boolean)
 @main("trickOver") {
     <h1>Round @round over</h1>
 
-    <ul>
-    @for( round <- rounds) {
-       <li>@round.toString()</li>
-    }
-    </ul>
+    <table>
+        <thead>
+        @for(player <- players) {
+            <th>@player.name</th>
+        }
+        </thead>
+        <tbody>
+            @for(round <- rounds.dropRight(1)) {
+                <tr>
+                    @for(idx <- players.indices) {
+                        <td>
+                            @round.results(idx) | @round.guessed_tricks(idx)
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <br>
+
+
     <button onClick="proceed()">Ok</button>
 
     <script>
             function proceed() {
-                window.location.replace(`http://localhost:9000/setTrickAmount`)
+                if (@trump) {
+                    window.location.replace(`http://localhost:9000/trump`)
+                } else {
+                    window.location.replace(`http://localhost:9000/setTrickAmount`)
+                }
             }
     </script>
 }

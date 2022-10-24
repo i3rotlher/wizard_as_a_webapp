@@ -11,6 +11,8 @@ class WebUI(controller: ControllerInteface) extends Reactor {
   listenTo(controller)
   var state: Event = null
 
+  // evtl. queue
+
   reactions+= {
     case event: game_started => state = event
     case event: get_Amount => state = event

@@ -1,59 +1,26 @@
 package controllers
 
-import com.google.inject.Guice
-import de.htwg.se.wizard.WizardModule
-import de.htwg.se.wizard.aview.{TUI, WebUI}
 import de.htwg.se.wizard.aview.gui.SwingGUI
-import de.htwg.se.wizard.control.controllerBaseImpl.{Controller, game_over, game_started, get_Amount, next_guess, next_player_card, player_create, round_over, start_round}
+import de.htwg.se.wizard.aview.{TUI, WebUI}
+import de.htwg.se.wizard.control.controllerBaseImpl._
 import de.htwg.se.wizard.model.FileIO.JSON.Impl_JSON
-import de.htwg.se.wizard.model.cardsComponent.Card
-import de.htwg.se.wizard.model.cardsComponent.Cards
 import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Gamestate
-import de.htwg.wapp.wizard.Wizard
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
-import de.htwg.se.wizard.control._
-
-import scala.swing.Reactor
-import scala.swing.event.Event
-import scala.util.{Failure, Success, Try}
 
 @Singleton
 class WizardController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
 
   val controller = Controller(Gamestate(), Impl_JSON())
   val tui = new TUI(controller)
   val gui = new SwingGUI(controller)
   val wui = new WebUI(controller)
 
-//  @Singleton
-//  val thread = new Thread {
-//    override def run: Unit = {
-//      controller.publish(new game_started)
-//      do {
-//        val input = scala.io.StdIn.readLine()
-//        tui.processInput(input)
-//      } while (!tui.state.isInstanceOf[game_over])
-//    }
-//  }
-
   def index() = Action { implicit request: Request[AnyContent] =>
-//    System.out.println(thread.getName)
     Ok(views.html.index())
   }
+
   def wizard() = Action { implicit request: Request[AnyContent] =>
-//    if (!thread.isAlive) {
-//      thread.start()
-//    } else {
-//      System.out.println("Laeuft schon")
-//    }
     if(wui.getState() == null) {
       controller.publish(new game_started)
     }
@@ -64,10 +31,12 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
   def setName(name: String) = Action {
     controller.create_player(name)
-    System.out.println("AAAAAAAHA: " + wui.getState())
     if (!wui.getState().isInstanceOf[player_create]) {
-      System.out.println("AHA ???")
-      Redirect("/setTrickAmount")
+      if(wui.getState().isInstanceOf[set_Wizard_trump]) {
+        Redirect("/trump")
+      } else {
+        Redirect("/setTrickAmount")
+      }
     } else {
       Ok(views.html.index())
     }
@@ -83,10 +52,11 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 
   def setTrump(color: String) = Action { implicit request: Request[AnyContent] =>
     controller.wish_trump(color)
-    Redirect("/trump")
+    Redirect("/setTrickAmount")
   }
   def getTrump() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trump(controller.get_player(controller.active_player_idx())))
+    val player = controller.get_player((controller.active_player_idx()-1+controller.player_amount())%controller.player_amount())
+    Ok(views.html.trump(player))
   }
 
   def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
@@ -130,7 +100,9 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def roundOver() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.roundOver(controller.getGamestate().getGame_table, controller.getGamestate().getRound_number))
+    val trump = if (wui.getState().isInstanceOf[set_Wizard_trump]) true else false
+    Ok(views.html.roundOver(controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
+      controller.getGamestate().getPlayers,trump))
   }
 
 }

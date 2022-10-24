@@ -6,6 +6,8 @@
     @for(card <- player.hand) {
     <li>
         <div style="cursor: pointer;" onclick="playCard(@player.hand.indexOf(card))">@card.toString()</div>
+        <img style="cursor: pointer;" onclick="playCard(@player.hand.indexOf(card))"
+        src="@routes.Assets.versioned("../../public/images/Cards/"+ card.colour + card.num + ".png")">
     </li>
     }
 </ul>
