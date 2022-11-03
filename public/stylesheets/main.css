@@ -1,0 +1,63 @@
+/*(Font) Imports*/
+@import url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+
+/*Styling*/
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+/*--------------------------------------------------------------------------------------*/
+/*Body*/
+body {
+    font-family: 'Tangerine', cursive;
+    font-size: 40px;
+    color: azure;
+    background-image: url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=170667a&w=0&h=b872CvcwkF1FL0g7oFR0q08VDhvKykyGqI3PzXjU-XI=);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg {
+
+}
+
+/*--------------------------------------------------------------------------------------*/
+/*Tags*/
+h1 {
+    color: lightcyan;
+    font-family: 'Island Moments', cursive;
+    text-decoration-line: underline;
+    font-size: 100px;
+}
+
+a {
+    color: azure;
+}
+
+a:hover {
+    background: lightgreen;
+}
+
+footer {
+    clear: both;
+    position: absolute;
+    background-color: darkcyan;
+    font-family: sans-serif;
+    color: #ffffff;
+    text-align: center;
+    align-content: center;
+    width: 100%;
+    height: 30px;
+}
+
+/*--------------------------------------------------------------------------------------*/
+/*Elements with Class*/
+
+/*--------------------------------------------------------------------------------------*/
+/*Elements with ID*/
+
+
+/*--------------------------------------------------------------------------------------*/
