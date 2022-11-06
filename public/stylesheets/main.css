@@ -1,7 +1,7 @@
 /*(Font) Imports*/
 @import url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
-
+@import url('https://fonts.cdnfonts.com/css/akapotsley');
 /*Styling*/
 body, html {
     height: 100%;
@@ -11,13 +11,12 @@ body, html {
 /*--------------------------------------------------------------------------------------*/
 /*Body*/
 body {
-    font-family: 'Tangerine', cursive;
-    font-size: 40px;
-    color: azure;
-    background-image: url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=170667a&w=0&h=b872CvcwkF1FL0g7oFR0q08VDhvKykyGqI3PzXjU-XI=);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    font-family: 'akaPotsley', cursive;
+    background: url(https://pbs.twimg.com/media/E6btcNMXoAMFHOF?format=jpg&name=large) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
 }
 
 .bg {
@@ -27,30 +26,31 @@ body {
 /*--------------------------------------------------------------------------------------*/
 /*Tags*/
 h1 {
-    color: lightcyan;
-    font-family: 'Island Moments', cursive;
-    text-decoration-line: underline;
-    font-size: 100px;
+    color: black;
+    font-family: 'akaPotsley', cursive;
+    font-weight: normal;
+    margin-bottom: 4em;
+    text-align: center;
+    font-size: 450%;
+
 }
 
 a {
-    color: azure;
+    color: black;
 }
 
-a:hover {
-    background: lightgreen;
-}
+
 
 footer {
     clear: both;
     position: absolute;
-    background-color: darkcyan;
+    background-color: black;
     font-family: sans-serif;
     color: #ffffff;
     text-align: center;
-    align-content: center;
+    align-content: bottom;
     width: 100%;
-    height: 30px;
+    height: 10px;
 }
 
 /*--------------------------------------------------------------------------------------*/
