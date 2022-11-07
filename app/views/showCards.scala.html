@@ -71,28 +71,14 @@
         </tr>
     </table>
 
-    <div class="gameStateTable" style="align-content: center;
-        margin-left: auto;
-        margin-right: auto;">
-        <h2>Spielstände</h2>
-        <div class="container">
-            <div class="row">
-            @for(player <- players) {
-                <div class="col">@player.name</div>
-            }
+    <div class="animated-card-hand-container">
+        <div class="animated-card-hand">
+        @for(i <- 0 to 19 ) {
+            <div class="animated-card">
+                <img class="playingCard" onclick="playCard(i)"
+                src="@routes.Assets.versioned(getCardPath.getCardPath(trump))" />
             </div>
-
-            @for(round <- rounds.dropRight(1)) {
-                <div class="row">
-                    @for(idx <- players.indices) {
-                        <div class="col">
-                            @round.results(idx) | @round.guessed_tricks(idx)
-                        </div>
-                    }
-                <div>
-                }
-            </div>
-        </div>
+        }
         </div>
     </div>
 }
