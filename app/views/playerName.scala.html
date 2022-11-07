@@ -1,15 +1,10 @@
 @(idx: Int)
-    @main("") {
+    @main("marketPlaceBackground") {
     <div class="hor">
-        <div class="container h-100">
+        <div class="container h-100 playerName">
             <h2>This game can be played by 3-6 Players.   <br>
                 Please select the amount of players that want to play:</h2>
-
-            <div class="container">
-                <div class="in text-center">
-                    <input placeholder="your name ..." id="name" onkeydown="setName(this.value)">
-                </div>
-            </div>
+            <input class="form-control in" type="text" placeholder="your name ..." id="name" onkeydown="setName(this.value)" style="width:450px">
         </div>
     </div>
 
