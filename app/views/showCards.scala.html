@@ -2,56 +2,60 @@
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Round
 
-@(player:Player, getCardPath: GetCardPath.type, trump:Card, playedCards:List[Card], rounds: List[Round], round: Int, players: List[Player])
-@main("showCards"){
+@(player: Player, getCardPath: GetCardPath.type, trump: Card, playedCards: List[Card], rounds: List[Round], round: Int, players: List[Player])
+@main("showCards") {
 
-<h1>Phase: Play a Card</h1>
-<h2>@player.name 's turn</h2>
+    <h1 class="actionDescription">Phase: Play a Card</h1>
+    <h2>@player.name 's turn</h2>
 
-<table style="margin-left: auto; margin-right: auto;">
+    <table style="margin-left: auto;
+        margin-right: auto;">
 
-            <tr>
-                <div>
-                    <td>
-                        <H3>Trump Card</H3>
-                        <br>
-                        <img class=trumpCard
-                        style="
-                            cursor: pointer;
-                            width: 175px;
-                            border-radius: 15px;
-                        "
-                        src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
-                         alt="Trump Card Picture"/>
-                    </td>
-                    <td>
-                        <H3>Played Cards</H3>
-                        <ul style="list-style: none">
-                            @for(card <- playedCards){
-                                <li
-                                style="padding-right: 15px; display: inline; border-radius: 15px">
-                                <img style="cursor: pointer; width: 175px"
-                                src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
-                                </li>
-                            }
-
-                </div>
-            </tr>
-
-            <tr>
+        <tr>
+            <div>
                 <td>
-                    <div>
-                        <h2>Select the Cards you want to play</h2>
-                        <br />
-                        <ul style="list-style: none">
-                            @for(card <- player.hand) { <li
-                                style="padding-right: 15px; display: inline; border-radius: 15px">
-                                <img style="cursor: pointer; width: 175px"
+                    <H3>Trump Card</H3>
+                    <br>
+                    <img class="card trump"
+                    src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
+                    alt="Trump Card Picture"/>
+                </td>
+                <td>
+                    <H3>Played Cards</H3>
+                    <ul style="list-style: none">
+                    @for(card <- playedCards) {
+                        <li
+                        style="padding-right: 15px;
+                            display: inline;
+                            border-radius: 15px">
+                            <img style="cursor: pointer;
+                                width: 175px"
+                            src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
+                        </li>
+                    }
+
+            </div>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="container">
+                    <h2>Select the Cards you want to play</h2>
+                    <br />
+                    <div class="playCardBackground">
+                        <ul class="playCard" style="list-style: none">
+                            @for(card <- player.hand) {
+                                <li
+                                style="padding-right: 15px;
+                                    display: inline;
+                                    border-radius: 15px">
+                                    <img style="cursor: pointer;
+                                        width: 175px; height: 250px; border-radius: 15px"
                                     onclick="playCard(@player.hand.indexOf(card))"
                                     src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
                                 </li>
-                                }
-                                <script>
+                            }
+                            <script>
                                     function playCard(idx) {
                                         fetch(`http://localhost:9000/playCard?idx=${idx}`, {
                                             method: "POST",
@@ -60,33 +64,36 @@
                                             window.location.replace(res.url);
                                         });
                                     }
-                                </script>
+                            </script>
                         </ul>
                     </div>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </td>
+        </tr>
+    </table>
 
-        <div class="gameStateTable" style="align-content: center; margin-left: auto; margin-right: auto;">
-            <h2>Spielstände</h2>
-            <table>
-                <thead>
-                @for(player <- players) {
-                    <th>@player.name</th>
-                }
-                </thead>
-                <tbody>
-                @for(round <- rounds.dropRight(1)) {
-                    <tr>
+    <div class="gameStateTable" style="align-content: center;
+        margin-left: auto;
+        margin-right: auto;">
+        <h2>Spielstände</h2>
+        <div class="container">
+            <div class="row">
+            @for(player <- players) {
+                <div class="col">@player.name</div>
+            }
+            </div>
+
+            @for(round <- rounds.dropRight(1)) {
+                <div class="row">
                     @for(idx <- players.indices) {
-                        <td>
+                        <div class="col">
                             @round.results(idx) | @round.guessed_tricks(idx)
-                        </td>
+                        </div>
                     }
-                    </tr>
+                <div>
                 }
-                </tbody>
-            </table>
+            </class>
+        </div>
         </div>
 
 
