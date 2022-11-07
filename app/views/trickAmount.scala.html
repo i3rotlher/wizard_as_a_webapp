@@ -4,10 +4,10 @@
 @main("trickAmount") {
 <h1>How many tricks are you going to make @player.name ?</h1>
 <h2>@player.name 's cards:</h2>
-    <ul style="list-style: none;">
+    <ul style="list-style: none; background: url('https://media.istockphoto.com/photos/natural-wood-texture-picture-id1145602814?k=20&m=1145602814&s=612x612&w=0&h=dIJlMEyULYudmRnJZUSoOwfcF1nLBWWwHrjP764kM3s=')">
     @for(card <- player.hand) {
         <li style="padding-right: 15px; display: inline;">
-            <img style="cursor: pointer; width: 175px; border-radius: 15px"
+            <img style="cursor: pointer; width: 175px; height:250px; border-radius: 15px"
             src="@routes.Assets.versioned(getCardPath.getCardPath(card))">
         </li>
     }
