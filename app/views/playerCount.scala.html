@@ -1,22 +1,24 @@
-@main("") {
-<div>This game can be played by 3-6 Players.
-Please select the amount of players that want to play:</div>
+@main("playerCountBackground") {
+
+    <div>This game can be played by 3-6 Players.
+    Please select the amount of players that want to play:</div>
 
 
-<button onclick="sendPlayerCount(3)">3</button><br>
-<button onclick="sendPlayerCount(4)">4</button><br>
-<button onclick="sendPlayerCount(5)">5</button><br>
-<button onclick="sendPlayerCount(6)">6</button><br>
+    <button class="playerCountBtn" onclick="sendPlayerCount(3)">3</button><br>
+    <button class="playerCountBtn" onclick="sendPlayerCount(4)">4</button><br>
+    <button class="playerCountBtn" onclick="sendPlayerCount(5)">5</button><br>
+    <button class="playerCountBtn" onclick="sendPlayerCount(6)">6</button><br>
 
-<script>
-    function sendPlayerCount(amount) {
-        fetch(`http://localhost:9000/playerCount?count=${amount}`, {
-            method: "POST",
-            body: ""
-        }).then(res => {
-            window.location.replace(res.url);
+    <script>
+        function sendPlayerCount(amount) {
+            fetch(`http://localhost:9000/playerCount?count=${amount}`, {
+                method: "POST",
+                body: ""
+            }).then(res => {
+                window.location.replace(res.url);
 
-        });
-    }
-</script>
+            });
+        }
+    </script>
+
 }
