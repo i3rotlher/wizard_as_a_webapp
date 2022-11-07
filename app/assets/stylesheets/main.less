@@ -82,6 +82,11 @@ h2 {
   text-shadow: 1px 1px 2px black;
 }
 
+h3{
+  color: @textColor;
+  text-shadow: 1px 1px 2px black;
+}
+
 a {
   color: black;
 }
@@ -114,17 +119,20 @@ body, html {
   font-size: 45px;
   text-shadow: 1px 1px 2px black
 }
-.actionDescription{
-  margin-bottom: 15%;
-}
+//.actionDescription{
+//  margin-bottom: 15%;
+//}
 .playCard{
   margin-right: auto;
   margin-left: auto;
 }
-.card{
-  margin-right: 20px;
+
+.playingCard{
   cursor: pointer;
-  width: 175px;
+  width: 150px;
+  height: 230px;
+  filter: drop-shadow(3px 3px 5px black);
+  border: solid rgba(0, 0, 0, 0.23);
 }
 .playerCard {
   border-radius: 20px;
@@ -132,9 +140,11 @@ body, html {
   //background: url("https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/b954c03a-8e80-4027-b4e3-6afb8a778da6.webp");
 }
 .playCardBackground{
-  background: url("https://www.dekodur.com/assets/images/d/natur-echtleder-dekoleather-l501-ltn-m-bf24f0ad.jpg");
+  background: url("https://static.vecteezy.com/system/resources/thumbnails/003/448/235/small/light-brown-cartoon-wood-texture-pattern-wallpaper-background-free-vector.jpg");
   border-radius: 20px;
   opacity: 0.75;
+  padding: 15px;
+  margin-top: 45px;
 }
 .trump {
   cursor: default;
@@ -144,4 +154,17 @@ body, html {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.trumpCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trickInsert{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 144px;
 }

@@ -2,62 +2,111 @@
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @(player: Player, trump: Card, getCardPath: GetCardPath.type)
 @main("marketPlaceBackground") {
-<h1 class="actionDescription">Phase: Trick Prediction</h1>
-
-<div class="playCard container">
-  <table>
-    <tr>
-      <td>
-        <h2>Trump Card:</h2>
-        <img class="card trump"
-          src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
-        />
-      </td>
-      <td><div class="container">
-        <h2>Player: @player.name</h2>
-        <h3>How many tricks are you going to make?</h3>
-        <input
-          type="number"
-          id="tricks"
-          value="0"
-          min="0"
-          onkeydown="setTricks(this.value)"
-        />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <h1>@player.name</h1>
+            </div>
+            <div class="col-8">
+                <h1 class="actionDescription">Phase: Trick Prediction</h1>
+            </div>
+            <div class="col-2">
+                <h1>HI</h1>
+            </div>
         </div>
-      </td>
-    </tr>
-  </table>
-</div>
 
-<div class="container">
-  <h2>@player.name 's cards:</h2>
-  <div class="playCardBackground">
-  <ul class="playerCard" style="list-style: none">
-    @for(card <- player.hand) {
-    <li style="padding-right: 15px; display: inline;">
-      <img
-        style="cursor: pointer; width: 175px; height: 250px; border-radius: 15px"
-        src="@routes.Assets.versioned(getCardPath.getCardPath(card))"
-      />
-    </li>
-    }
-  </ul>
-  </div>
-</div>
-<script>
-  function setTricks(tricks) {
-    if (this.event.key === "Enter") {
-      fetch(`http://localhost:9000/setTrickAmount?amount=${tricks}`, {
-        method: "POST",
-        body: "",
-      }).then((res) => {
-        if (res.redirected) {
-          window.location.replace(res.url);
-        } else {
-          window.location.replace(`http://localhost:9000/setTrickAmount`);
-        }
-      });
-    }
-  }
-</script>
+        <div class="row row-cols-3">
+            <div class="trickInsert col-8">
+                <h3>Player: @player.name</h3>
+                <h2 style="text-align: start">How many tricks are you going to make?</h2>
+                <input
+                class="form-control"
+                type="number"
+                id="tricks"
+                value="0"
+                min="0"
+                onkeydown="setTricks(this.value)"
+                    style="width: fit-content"
+                />
+            </div>
+            <div class="trumpCard col-4">
+                <h2>Trump Card:</h2>
+                <img class="playingCard trump"
+                src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
+                />
+            </div>
+            <div class="col-12">
+                <div class="playCardBackground">
+                    <ul style="margin: auto">
+                    @for(card <- player.hand) {
+                    <li style="display: inline;">
+                    <img
+                    class="playingCard"
+                    style="cursor: pointer;"
+                    src="@routes.Assets.versioned(getCardPath.getCardPath(card))"
+                    />
+                    </li>
+                    }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="playCard container">*@
+    @* <table>*@
+    @* <tr>*@
+    @* <td>*@
+    @* <h2>Trump Card:</h2>*@
+    @* <img class="card trump"*@
+    @* src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"*@
+    @* />*@
+    @* </td>*@
+    @* <td><div class="container">*@
+    @* <h2>Player: @player.name</h2>*@
+    @* <h3>How many tricks are you going to make?</h3>*@
+    @* <input*@
+    @* type="number"*@
+    @* id="tricks"*@
+    @* value="0"*@
+    @* min="0"*@
+    @* onkeydown="setTricks(this.value)"*@
+    @* />*@
+    @* </div>*@
+    @* </td>*@
+    @* </tr>*@
+    @* </table>*@
+    @*</div>*@
+
+    @*<div class="container">*@
+    @* <h2>@player.name 's cards:</h2>*@
+    @* <div class="playCardBackground">*@
+    @* <ul class="playerCard" style="list-style: none">*@
+    @* @for(card <- player.hand) {*@
+    @* <li style="padding-right: 15px; display: inline;">*@
+    @* <img*@
+    @* style="cursor: pointer; width: 175px; height: 250px; border-radius: 15px"*@
+    @* src="@routes.Assets.versioned(getCardPath.getCardPath(card))"*@
+    @* />*@
+    @* </li>*@
+    @* }*@
+    @* </ul>*@
+    @* </div>*@
+    @*</div>*@
+    <script>
+            function setTricks(tricks) {
+                if (this.event.key === "Enter") {
+                    fetch(`http://localhost:9000/setTrickAmount?amount=${tricks}`, {
+                        method: "POST",
+                        body: "",
+                    }).then((res) => {
+                        if (res.redirected) {
+                            window.location.replace(res.url);
+                        } else {
+                            window.location.replace(`http://localhost:9000/setTrickAmount`);
+                        }
+                    });
+                }
+            }
+    </script>
 }
