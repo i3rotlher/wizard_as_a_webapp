@@ -52,8 +52,8 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def setTrump(color: String) = Action { implicit request: Request[AnyContent] =>
-    controller.setGamestate(controller.getGamestate().set_active_player_idx(controller.active_player_idx()+1))
     controller.wish_trump(color)
+    controller.setGamestate(controller.getGamestate().set_active_player_idx((controller.active_player_idx()+1)%controller.player_amount()))
     Redirect("/setTrickAmount")
   }
   def getTrump() = Action { implicit request: Request[AnyContent] =>

@@ -16,7 +16,7 @@
                 <td>
                     <H3>Trump Card</H3>
                     <br>
-                    <img class="card trump"
+                    <img class="trump playingCard"
                     src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
                     alt="Trump Card Picture"/>
                 </td>
@@ -28,12 +28,11 @@
                         style="padding-right: 15px;
                             display: inline;
                             border-radius: 15px">
-                            <img style="cursor: pointer;
-                                width: 175px"
+                            <img class="playingCard" style="cursor: pointer"
                             src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
                         </li>
                     }
-
+                    </ul>
             </div>
         </tr>
 
@@ -92,9 +91,8 @@
                     }
                 <div>
                 }
-            </class>
+            </div>
         </div>
         </div>
-
-
+    </div>
 }
