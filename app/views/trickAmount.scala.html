@@ -37,17 +37,16 @@
             </div>
             <div class="col-12">
                 <div class="playCardBackground">
-                    <ul style="margin: auto">
-                    @for(card <- player.hand) {
-                    <li style="display: inline;">
-                    <img
-                    class="playingCard"
-                    style="cursor: pointer;"
-                    src="@routes.Assets.versioned(getCardPath.getCardPath(card))"
-                    />
-                    </li>
-                    }
-                    </ul>
+                    <div class="animated-card-hand-container">
+                        <div class="animated-card-hand">
+                        @for(card <- player.hand) {
+                            <div class="animated-card">
+                                <img class="playingCard"
+                                src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
+                            </div>
+                        }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

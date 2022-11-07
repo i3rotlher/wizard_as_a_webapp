@@ -130,6 +130,7 @@ body, html {
   height: 230px;
   filter: drop-shadow(3px 3px 5px black);
   border: solid rgba(0, 0, 0, 0.23);
+  border-radius: 15px;
 }
 .playerCard {
   border-radius: 20px;
@@ -137,11 +138,12 @@ body, html {
   //background: url("https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/b954c03a-8e80-4027-b4e3-6afb8a778da6.webp");
 }
 .playCardBackground{
-  background: url("https://static.vecteezy.com/system/resources/thumbnails/003/448/235/small/light-brown-cartoon-wood-texture-pattern-wallpaper-background-free-vector.jpg");
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/003/448/235/small/light-brown-cartoon-wood-texture-pattern-wallpaper-background-free-vector.jpg");
   border-radius: 20px;
-  opacity: 0.75;
   padding: 15px;
   margin-top: 45px;
+  background-color: #ffad514d;
+  background-blend-mode: overlay;
 }
 .trump {
   cursor: default;
@@ -156,8 +158,14 @@ body, html {
 .animated-card-hand,
 .animated-card {
   aspect-ratio: 5 / 7;
-  //min-height: 30vmin;
-  //width: 30vmin;
+  width:  inherit;
+  position: relative;
+  height: 150px;
+  top: -50%;
+}
+
+.animated-card-hand-played {
+  transform: translateX(555%);
 }
 
 .animated-card {
@@ -312,7 +320,7 @@ body, html {
 
 .animated-card-hand-container {
   display: grid;
-  //height: 100vh;
+  height: 240px;
   margin: 0;
   place-items: center;
 }
