@@ -1,6 +1,8 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @import de.htwg.se.wizard.model.cardsComponent.Card
-@(player:Player, getCardPath: GetCardPath.type, trump:Card, playedCards:List[Card])
+@import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Round
+
+@(player:Player, getCardPath: GetCardPath.type, trump:Card, playedCards:List[Card], rounds: List[Round], round: Int, players: List[Player])
 @main("showCards"){
 
 <h1>Phase: Play a Card</h1>
@@ -65,8 +67,26 @@
             </tr>
         </table>
 
-        <div class="gameStateTable">
-            <h1>Spielstände</h1>
+        <div class="gameStateTable" style="align-content: center; margin-left: auto; margin-right: auto;">
+            <h2>Spielstände</h2>
+            <table>
+                <thead>
+                @for(player <- players) {
+                    <th>@player.name</th>
+                }
+                </thead>
+                <tbody>
+                @for(round <- rounds.dropRight(1)) {
+                    <tr>
+                    @for(idx <- players.indices) {
+                        <td>
+                            @round.results(idx) | @round.guessed_tricks(idx)
+                        </td>
+                    }
+                    </tr>
+                }
+                </tbody>
+            </table>
         </div>
 
 
