@@ -92,7 +92,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 
   }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath))
+    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath, controller.getGamestate().getTrump_card, controller.getGamestate().getPlayedCards))
   }
 
   def howTo() = Action { implicit request: Request[AnyContent] =>

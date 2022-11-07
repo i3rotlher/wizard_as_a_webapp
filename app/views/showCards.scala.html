@@ -1,5 +1,6 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-@(player:Player, getCardPath: GetCardPath.type)
+@import de.htwg.se.wizard.model.cardsComponent.Card
+@(player:Player, getCardPath: GetCardPath.type, trump:Card, playedCards:List[Card])
 @main("showCards"){
 
 <h1>Phase: Play a Card</h1>
@@ -9,9 +10,29 @@
 
             <tr>
                 <div>
-                    <td>Trump Card
+                    <td>
+                        <H3>Trump Card</H3>
+                        <br>
+                        <img class=trumpCard
+                        style="
+                            cursor: pointer;
+                            width: 175px;
+                            border-radius: 15px;
+                        "
+                        src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
+                         alt="Trump Card Picture"/>
                     </td>
-                    <td>Played Cards</td>
+                    <td>
+                        <H3>Played Cards</H3>
+                        <ul style="list-style: none">
+                            @for(card <- playedCards){
+                                <li
+                                style="padding-right: 15px; display: inline; border-radius: 15px">
+                                <img style="cursor: pointer; width: 175px"
+                                src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
+                                </li>
+                            }
+
                 </div>
             </tr>
 
