@@ -1,26 +1,52 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-@(player: Player, getCardPath: GetCardPath.type)
+@(player:Player, getCardPath: GetCardPath.type)
 @main("showCards"){
-<h1>@player.name 's cards:</h1>
-<ul style="list-style: none;">
-    @for(card <- player.hand) {
-    <li style="padding-right: 15px; display: inline; border-radius: 15px">
-        <img style="cursor: pointer; width: 175px" onclick="playCard(@player.hand.indexOf(card))"
-         src="@routes.Assets.versioned(getCardPath.getCardPath(card))">
-    </li>
-    }
-</ul>
-<br>
-<h2>To Play a Card click the card</h2>
 
-    <script>
-        function playCard(idx) {
-            fetch(`http://localhost:9000/playCard?idx=${idx}`, {
-                method: "POST",
-                body: ""
-            }).then(res => {
-                window.location.replace(res.url)
-            });
-        };
-    </script>
+<h1>Phase: Play a Card</h1>
+<h2>@player.name 's turn</h2>
+
+<table style="margin-left: auto; margin-right: auto;">
+
+            <tr>
+                <div>
+                    <td>Trump Card
+                    </td>
+                    <td>Played Cards</td>
+                </div>
+            </tr>
+
+            <tr>
+                <td>
+                    <div>
+                        <h2>Select the Cards you want to play</h2>
+                        <br />
+                        <ul style="list-style: none">
+                            @for(card <- player.hand) { <li
+                                style="padding-right: 15px; display: inline; border-radius: 15px">
+                                <img style="cursor: pointer; width: 175px"
+                                    onclick="playCard(@player.hand.indexOf(card))"
+                                    src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
+                                </li>
+                                }
+                                <script>
+                                    function playCard(idx) {
+                                        fetch(`http://localhost:9000/playCard?idx=${idx}`, {
+                                            method: "POST",
+                                            body: "",
+                                        }).then((res) => {
+                                            window.location.replace(res.url);
+                                        });
+                                    }
+                                </script>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="gameStateTable">
+            <h1>Spielstände</h1>
+        </div>
+
+
 }
