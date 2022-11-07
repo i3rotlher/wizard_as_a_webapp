@@ -2,38 +2,66 @@
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @(player: Player, trump: Card, getCardPath: GetCardPath.type)
 @main("trickAmount") {
-<h1>How many tricks are you going to make @player.name ?</h1>
-<h2>@player.name 's cards:</h2>
-    <ul style="list-style: none; background: url('https://media.istockphoto.com/photos/natural-wood-texture-picture-id1145602814?k=20&m=1145602814&s=612x612&w=0&h=dIJlMEyULYudmRnJZUSoOwfcF1nLBWWwHrjP764kM3s=')">
+<h1 id="action_description">Phase: Trick Prediction</h1>
+
+<div>
+  <table>
+    <tr>
+      <td>
+        <h2>Trump Card:</h2>
+        <img
+          style="
+            cursor: pointer;
+            width: 175px;
+            border-radius: 15px;
+            margin-left: 40px;
+          "
+          src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
+        />
+      </td>
+      <td>
+        <h2>Player: @player.name</h2>
+        <h3>How many tricks are you going to make?</h3>
+        <input
+          type="number"
+          id="tricks"
+          value="0"
+          min="0"
+          onkeydown="setTricks(this.value)"
+          style="margin-left: 40px"
+        />
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <h2>@player.name 's cards:</h2>
+  <ul style="list-style: none; background: url('https://media.istockphoto.com/photos/natural-wood-texture-picture-id1145602814?k=20&m=1145602814&s=612x612&w=0&h=dIJlMEyULYudmRnJZUSoOwfcF1nLBWWwHrjP764kM3s=')">
     @for(card <- player.hand) {
-        <li style="padding-right: 15px; display: inline;">
-            <img style="cursor: pointer; width: 175px; height:250px; border-radius: 15px"
-            src="@routes.Assets.versioned(getCardPath.getCardPath(card))">
-        </li>
+    <li style="padding-right: 15px; display: inline;">
+      <img
+        style="cursor: pointer; width: 175px; height: 250px; border-radius: 15px"
+        src="@routes.Assets.versioned(getCardPath.getCardPath(card))"
+      />
+    </li>
     }
-    </ul>
-<h2>Trump Card:</h2>
-    <img style="cursor: pointer; width: 175px; border-radius: 15px; margin-left: 40px"
-    src="@routes.Assets.versioned(getCardPath.getCardPath(trump))">
-<br>
-    <h2>Guess:</h2>
-<input type="number" id="tricks" value="0" min="0" onkeydown="setTricks(this.value)" style="margin-left: 40px">
-
+  </ul>
+</div>
 <script>
-        function setTricks(tricks) {
-            if (this.event.key === "Enter") {
-                fetch(`http://localhost:9000/setTrickAmount?amount=${tricks}`, {
-                    method: "POST",
-                    body: ""
-                }).then(res => {
-                    if(res.redirected) {
-                        window.location.replace(res.url)
-                    } else {
-                        window.location.replace(`http://localhost:9000/setTrickAmount`);
-                    }
-                });
-            }
+  function setTricks(tricks) {
+    if (this.event.key === "Enter") {
+      fetch(`http://localhost:9000/setTrickAmount?amount=${tricks}`, {
+        method: "POST",
+        body: "",
+      }).then((res) => {
+        if (res.redirected) {
+          window.location.replace(res.url);
+        } else {
+          window.location.replace(`http://localhost:9000/setTrickAmount`);
         }
-
+      });
+    }
+  }
 </script>
 }
