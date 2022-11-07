@@ -1,13 +1,17 @@
 @main("playerCountBackground") {
 
-    <div>This game can be played by 3-6 Players.
-    Please select the amount of players that want to play:</div>
 
+<h2>This game can be played by 3-6 Players.   <br>
+    Please select the amount of players that want to play:</h2>
+    <div class="container">
+        <div class="text-center">
+            <button type="button" class="pla" onclick="sendPlayerCount(3)">3</button>
+            <button type="button" class="pla" onclick="sendPlayerCount(4)">4</button>
+            <button type="button" class="pla" onclick="sendPlayerCount(5)">5</button>
+            <button type="button" class="pla" onclick="sendPlayerCount(6)">6</button>
+        </div>
+    </div>
 
-    <button class="playerCountBtn" onclick="sendPlayerCount(3)">3</button><br>
-    <button class="playerCountBtn" onclick="sendPlayerCount(4)">4</button><br>
-    <button class="playerCountBtn" onclick="sendPlayerCount(5)">5</button><br>
-    <button class="playerCountBtn" onclick="sendPlayerCount(6)">6</button><br>
 
     <script>
         function sendPlayerCount(amount) {
