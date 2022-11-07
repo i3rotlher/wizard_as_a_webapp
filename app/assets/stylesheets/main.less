@@ -3,9 +3,11 @@
 @import (css) url('https://fonts.cdnfonts.com/css/akapotsley');
 @import (css) url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
 
+@textColor: #debd4f;
+
 // Hier allgemeine Styles
 body {
-  padding-top: 20px;
+  padding: 20px;
   font-family: 'akaPotsley', cursive !important;
   font-weight: normal !important;
   color: black !important;
@@ -29,21 +31,22 @@ body {
   color: rgba(0, 0, 15, 0.66);
 }
 
-
-
-
-
-
-
-
-
 h1 {
-  color: #debd4f;
+  color: @textColor;
   font-family: 'akaPotsley', cursive;
   font-weight: normal;
   margin-bottom: 4em;
   text-align: center;
   font-size: 450%;
+  text-shadow: 1px 1px 2px black;
+}
+
+h2 {
+  color: @textColor;
+  font-family: 'akaPotsley', cursive;
+  font-weight: normal;
+  margin-bottom: 4em;
+  text-align: center;
   text-shadow: 1px 1px 2px black;
 }
 
@@ -56,8 +59,26 @@ body, html {
   width: 100%;
 }
 
-// class
-
 .playerCountBtn {
-  color: blue;
+  color: #ea0303;
+}
+
+#howToPlayBtn {
+  width: 150px;
+  color: @textColor;
+  background: none;
+  border: none;
+  text-shadow: 1px 1px 2px black;
+}
+
+#rulesIcon {
+  font-size: 25px;
+  -webkit-text-stroke-width: 1px;
+}
+
+#playWizard {
+  background: none;
+  border: none;
+  font-size: 45px;
+  text-shadow: 1px 1px 2px black
 }
