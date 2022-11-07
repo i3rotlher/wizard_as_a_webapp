@@ -21,6 +21,37 @@ body {
   height: auto;
 }
 
+.hor {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items: center;
+}
+
+
+.pla{
+    width: 200px;
+    height: 110px;
+    border-radius: 20px;
+    border: none;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRedn293ViBlZuQgEgmNx7lTt58pD9hFreT4XddKZhe7ZxdfH92jyncTe8-LqwJQswxc4g&usqp=CAU') no-repeat top left;
+    padding: 2px 8px;
+    font-size: 500%;
+    opacity: 0.75;
+
+}
+
+.pla:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.in{
+    opacity: 0.75;
+}
+
+
+
 
 .playerCountBackground {
   .background;

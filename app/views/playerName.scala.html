@@ -1,7 +1,18 @@
 @(idx: Int)
     @main("") {
-<h1>Player @idx please enter your name: </h1>
-<input placeholder="your name ..." id="name" onkeydown="setName(this.value)">
+    <div class="hor">
+        <div class="container h-100">
+            <h2>This game can be played by 3-6 Players.   <br>
+                Please select the amount of players that want to play:</h2>
+
+            <div class="container">
+                <div class="in text-center">
+                    <input placeholder="your name ..." id="name" onkeydown="setName(this.value)">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function setName(name) {
             if (this.event.key === "Enter") {
@@ -20,3 +31,5 @@
 
     </script>
     }
+
+</div>
