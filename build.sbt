@@ -28,3 +28,7 @@ unmanagedBase := baseDirectory.value / "lib"
 libraryDependencies ++= Seq(
   ws
 )
+
+// old: includeFilter in (Assets, LessKeys.less) := "*.less"
+
+Assets / LessKeys.less / includeFilter := "*.less"
