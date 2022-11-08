@@ -71,7 +71,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     }
   }
   def getTrickAmount() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath))
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table))
   }
 
   def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>

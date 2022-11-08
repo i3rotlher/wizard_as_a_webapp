@@ -4,15 +4,19 @@
 @main("marketPlaceBackground") {
     <h1>Round @round over</h1>
 
-    <table>
+    <table class="table table-striped scoreBoard">
         <thead>
-        @for(player <- players) {
-            <th>@player.name</th>
-        }
+            <tr>
+                <th scope="col">Round</th>
+                @for(player <- players) {
+                    <th>@player.name</th>
+                }
+            </tr>
         </thead>
         <tbody>
-            @for(round <- rounds.dropRight(1)) {
+            @for((round, i) <- rounds.zipWithIndex.dropRight(1)) {
                 <tr>
+                    <th scope="row">@(i+1)</th>
                     @for(idx <- players.indices) {
                         <td>
                             @round.results(idx) | @round.guessed_tricks(idx)
