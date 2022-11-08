@@ -58,7 +58,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
   def getTrump() = Action { implicit request: Request[AnyContent] =>
     val player = controller.get_player((controller.active_player_idx()-1+controller.player_amount())%controller.player_amount())
-    Ok(views.html.trump(player))
+    Ok(views.html.trump(player, GetCardPath))
   }
 
   def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
