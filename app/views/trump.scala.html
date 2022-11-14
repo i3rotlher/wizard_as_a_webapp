@@ -2,32 +2,51 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 @(player: Player, getCardPath: GetCardPath.type)
 @main("marketPlaceBackground"){
-
-    <div class="hor">
-        <div class="container h-100">
-            <h1>A Wizard is Trump! You can wish a Trumpcolor @player.name</h1>
-                <div class="text-center">
-                    <button style="background-color: yellow" class="trumpSelect" onclick="setTrump('yellow')">Yellow</button><br>
-                    <button style="background-color: green" class="trumpSelect" onclick="setTrump('green')">Green</button><br>
-                    <button style="background-color: blue" class="trumpSelect" onclick="setTrump('blue')"> Blue</button><br>
-                    <button style="background-color: red" class="trumpSelect" onclick="setTrump('red')">Red</button><br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <h1>@player.name's Turn</h1>
+            </div>
+            <div class="col-8">
+                <h1 class="actionDescription">Phase: Wish a Trump</h1>
+            </div>
+            <div class="col-2">
+                    <!-- Button trigger modal -->
+                <button type="button" class="showScoreBoardBtn btn btn-secondary" data-bs-toggle="modal" data-bs-target="#scoreBoardModal">
+                    <i class="bi bi-table"></i><br>
+                    Score
+                </button>
+            </div>
+        </div>
+        <div class="row row-cols-12">
+            <div class="col-12">
+                <div class="hor" style="margin-top: 150px; margin-bottom: 50px; min-height: auto;">
+                    <div class="container h-100">
+                        <h1>A Wizard is Trump! You can wish a Trumpcolor:</h1>
+                        <div class="text-center">
+                            <button class="trumpSelect" id="yellowTrump" onclick="setTrump('yellow')">Yellow</button>
+                            <button class="trumpSelect" id="greenTrump" onclick="setTrump('green')">Green</button>
+                            <button class="trumpSelect" id="blueTrump" onclick="setTrump('blue')"> Blue</button>
+                            <button class="trumpSelect" id="redTrump" onclick="setTrump('red')">Red</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="playCardBackground">
+                    <div class="animated-card-hand-container">
+                        <div class="animated-card-hand">
+                        @for(card <- player.hand) {
+                            <div class="animated-card">
+                                <img class="playingCard"
+                                src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
+                            </div>
+                        }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="playCardBackground">
-        <div class="animated-card-hand-container">
-            <div class="animated-card-hand">
-            @for(card <- player.hand) {
-                <div class="animated-card">
-                    <img class="playingCard" onclick="playCard(@player.hand.indexOf(card))"
-                    src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
-                </div>
-            }
-            </div>
-        </div>
-    </div>
-
 
 }

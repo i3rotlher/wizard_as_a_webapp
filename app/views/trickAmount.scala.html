@@ -79,7 +79,7 @@
                         <tbody>
                         @for((round, i) <- rounds.zipWithIndex.dropRight(1)) {
                             <tr>
-                                <th scope="row">@(i+1)</th>
+                                <th scope="row">@( )</th>
                                 @for(idx <- players.indices) {
                                     <td>
                                         @round.results(idx) | @round.guessed_tricks(idx)

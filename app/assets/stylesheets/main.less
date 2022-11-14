@@ -116,9 +116,15 @@ body, html {
   font-size: 45px;
   text-shadow: 1px 1px 2px black
 }
-//.actionDescription{
-//  margin-bottom: 15%;
-//}
+
+#playWizard:disabled {
+  background: none;
+  border: none;
+  font-size: 45px;
+  text-shadow: 1px 1px 2px black;
+  color: #adb5bd;
+}
+
 .playCard{
   margin-right: auto;
   margin-left: auto;
@@ -138,12 +144,13 @@ body, html {
   //background: url("https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/b954c03a-8e80-4027-b4e3-6afb8a778da6.webp");
 }
 .playCardBackground{
-  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/003/448/235/small/light-brown-cartoon-wood-texture-pattern-wallpaper-background-free-vector.jpg");
   border-radius: 20px;
   padding: 15px;
   margin-top: 45px;
-  background-color: #ffad514d;
+  background-color: #737419bd;
   background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-image: url(https://img.freepik.com/free-vector/flat-design-wood-texture-illustration_23-2149273581.jpg?w=1480&t=st=1667914799~exp=1667915399~hmac=175b2fe76c35a913c0f9715bf99072fb96357c831d39a14134409feefe246924);
 }
 .trump {
   cursor: default;
@@ -176,7 +183,7 @@ body, html {
   transition: all 600ms cubic-bezier(.17,.67,.6,.97);
 }
 .animated-card:hover {
-  top: 45%;
+  top: 30%;
 }
 
 .animated-card:nth-of-type(1) {
@@ -358,11 +365,152 @@ body, html {
 
 
 .trumpSelect {
-  width: 200px;
-  height: 110px;
+  width: 250px;
+  color: white;
+  text-shadow: 1px 1px 2px #636464;
   border-radius: 20px;
   border: none;
-  padding: 2px 8px;
-  font-size: 500%;
-  opacity: 0.75;
+  margin: 5px;
+  font-size: 350%;
 }
+
+#loadGameContainer {
+  padding-top: 35px
+}
+
+#redTrump {
+  background-color: #b43d2c;
+  color: #f4a784;
+  backdrop-filter: blur(5px);
+}
+
+#yellowTrump {
+  background-color: #deab4f;
+  color: #f9e8a0;
+  backdrop-filter: blur(5px);
+}
+
+#greenTrump {
+  background-color: #23a959;
+  color: #80e69f;
+  backdrop-filter: blur(5px);
+}
+
+#blueTrump {
+  background-color: #4a83c1;
+  color: #aac3ee;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes blink {
+  /**
+   * At the start of the animation the dot
+   * has an opacity of .2
+   */
+  0% {
+    opacity: .2;
+  }
+  /**
+   * At 20% the dot is fully visible and
+   * then fades out slowly
+   */
+  20% {
+    opacity: 1;
+  }
+  /**
+   * Until it reaches an opacity of .2 and
+   * the animation can start again
+   */
+  100% {
+    opacity: .2;
+  }
+}
+
+.loading span {
+  /**
+   * Use the blink animation, which is defined above
+   */
+  animation-name: blink;
+  /**
+   * The animation should take 1.4 seconds
+   */
+  animation-duration: 1.4s;
+  /**
+   * It will repeat itself forever
+   */
+  animation-iteration-count: infinite;
+  /**
+   * This makes sure that the starting style (opacity: .2)
+   * of the animation is applied before the animation starts.
+   * Otherwise we would see a short flash or would have
+   * to set the default styling of the dots to the same
+   * as the animation. Same applies for the ending styles.
+   */
+  animation-fill-mode: both;
+}
+
+.loading span:nth-child(2) {
+  /**
+   * Starts the animation of the third dot
+   * with a delay of .2s, otherwise all dots
+   * would animate at the same time
+   */
+  animation-delay: .2s;
+}
+
+.loading span:nth-child(3) {
+  /**
+   * Starts the animation of the third dot
+   * with a delay of .4s, otherwise all dots
+   * would animate at the same time
+   */
+  animation-delay: .4s;
+}
+
+@keyframes fadeInOutAnimation {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeInOut {
+  cursor: pointer;
+  animation: fadeInOutAnimation 1s infinite;
+  animation-direction: alternate-reverse;
+  animation-timing-function: ease-in-out;
+}
+
+
+#canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
