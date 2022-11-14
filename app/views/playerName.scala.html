@@ -8,23 +8,7 @@
         </div>
     </div>
 
-    <script>
-        function setName(name) {
-            if (this.event.key === "Enter") {
-                fetch(`http://localhost:9000/playerName?name=${name}`, {
-                    method: "POST",
-                    body: ""
-                }).then(res => {
-                    if(res.redirected) {
-                        window.location.replace(res.url)
-                    } else {
-                        window.location.replace(`http://localhost:9000/playerName`);
-                    }
-                });
-            }
-        }
 
-    </script>
     }
 
 </div>

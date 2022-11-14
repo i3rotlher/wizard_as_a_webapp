@@ -93,14 +93,3 @@
         </div>
     </div>
 }
-
-<script>
-        function playCard(idx) {
-            fetch(`http://localhost:9000/playCard?idx=${idx}`, {
-                method: "POST",
-                body: "",
-            }).then((res) => {
-                window.location.replace(res.url);
-            });
-        }
-</script>

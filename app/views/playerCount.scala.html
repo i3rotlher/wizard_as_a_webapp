@@ -16,16 +16,4 @@
 </div>
 
 
-    <script>
-        function sendPlayerCount(amount) {
-            fetch(`http://localhost:9000/playerCount?count=${amount}`, {
-                method: "POST",
-                body: ""
-            }).then(res => {
-                window.location.replace(res.url);
-
-            });
-        }
-    </script>
-
 }

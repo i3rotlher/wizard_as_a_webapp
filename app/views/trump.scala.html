@@ -30,15 +30,4 @@
     </div>
 
 
-    <script>
-            function setTrump(color) {
-                    fetch(`http://localhost:9000/trump?color=${color}`, {
-                        method: "POST",
-                        body: ""
-                    }).then(res => {
-                        window.location.replace(res.url)
-                    });
-            }
-
-    </script>
 }
