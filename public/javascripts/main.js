@@ -6,21 +6,32 @@ function howToPlay() {
     });
 }
 
+var proceedToGame = false;
+
+document.addEventListener("keydown", function(e) {
+    // Add scripts here
+    console.log(e.code);
+    if(e.code === "Enter" && proceedToGame) {
+        proceedToGame = false;
+        fetch(`http://localhost:9000/wizard`, {
+            method: "GET"
+        }).then(res => {
+            window.location.replace(res.url);
+        });
+    }
+});
+
 function play() {
 
     document.getElementById("playGameContainer").setAttribute("style", "display: none")
     $("#loadGameContainer").css("display", "inline");
     setTimeout(function () {
         $("#canvas").css("display", "block");
-    }, 500)
-
-    setTimeout(function(){
-        fetch(`http://localhost:9000/wizard`, {
-            method: "GET"
-        }).then(res => {
-            window.location.replace(res.url);
-        });
-        $("#loadGameContainer").css("display", "none");
+    }, 500);
+    setTimeout(function () {
+        proceedToGame = true
+        $("#loadGame").addClass("fadeInOut");
+        document.getElementById("loadGame").innerHTML = "Game ready! Press Enter to proceed ...";
     }, 4050);
 }
 
