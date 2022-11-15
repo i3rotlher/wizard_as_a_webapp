@@ -405,3 +405,9 @@ canvas.addEventListener( 'mouseup', function( e ) {
 
 // once the window loads, we are ready for some fireworks!
 window.onload = loop;
+
+$("#playWizard").on("click", function() {play()})
+$("#howToPlayBtn").on("click", function() {howToPlay()})
+$(".trumpCard").on("click", function() {setTrump(this.color)})
+$(".playingCard").on("click", function() {playCard(this.value)})
+$("#tricks").on("click", function() {setTricks(this.values)})
