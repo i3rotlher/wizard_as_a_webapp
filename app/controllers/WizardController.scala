@@ -15,7 +15,7 @@ import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
 class WizardController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
   val controller = Controller(Gamestate(), Impl_JSON())
-  val tui = new TUI(controller)
+  // val tui = new TUI(controller)
   // val gui = new SwingGUI(controller)
   val wui = new WebUI(controller)
 
@@ -101,17 +101,11 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
-
-    // if still setTrick return JSON of Player and Played Cards
-    controller.get_player(controller.active_player_idx())
-    // else goTo playCard
-
     controller.set_guess(amount)
-    System.out.println(wui.getState())
     if(!wui.getState().isInstanceOf[next_guess]) {
-      Redirect("/playCard")
+      Ok(Json.obj(("redirect", "/playCard")))
     } else {
-      Ok("/setTrickAmount")
+      Ok(Json.toJson(controller.get_player(controller.active_player_idx())))
     }
   }
   def getTrickAmount() = Action { implicit request: Request[AnyContent] =>
@@ -126,14 +120,19 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     if (!wui.getState().isInstanceOf[next_player_card]) {
       val next_round = controller.getGamestate().getRound_number
       if (round != next_round) {
-        Ok(Json.obj(("redirect", "/roundOver")))
+        Ok(Json.obj(("redirect", "/trickOver")))
       } else if (wui.getState().isInstanceOf[card_not_playable]) {
         NotAcceptable("CardNotPlayable")
       } else {
         Ok(Json.obj(("redirect", "/trickOver")))
       }
     } else {
-      Ok(Json.obj(("player", controller.get_player(controller.active_player_idx())), ("playedCard", playedCard)))
+      if (controller.game.getPlayedCards.isEmpty) {
+        Ok(Json.obj(("redirect", "/trickOver")))
+        // Ok(Json.obj(("player", controller.get_player(controller.active_player_idx())), ("playedCard", "RESET")))
+      } else {
+        Ok(Json.obj(("player", controller.get_player(controller.active_player_idx())), ("playedCard", playedCard)))
+      }
     }
 
   }
@@ -147,7 +146,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def trickOver() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickOver(controller.get_mini_winner()))
+    Ok(views.html.trickOver(controller.get_mini_winner(), !wui.getState().isInstanceOf[next_player_card]))
   }
 
   def roundOver() = Action { implicit request: Request[AnyContent] =>

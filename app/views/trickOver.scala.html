@@ -1,6 +1,10 @@
 @import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-@(player: Player)
+@(player: Player, roundOver: Boolean)
 @main("marketPlaceBackground") {
-    <h1>Trick won by @player.name</h1>
-    <button id="trickOverOK">Ok</button>
+    <div class="hor">
+        <div class="container h-100 playerName">
+            <h1>Trick won by @player.name</h1>
+            <button value="@roundOver" id="trickOverOK">Ok</button>
+        </div>
+    </div>
 }
