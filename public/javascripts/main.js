@@ -9,8 +9,6 @@ function howToPlay() {
 var proceedToGame = false;
 
 document.addEventListener("keydown", function(e) {
-    // Add scripts here
-    console.log(e.code);
     if(e.code === "Enter" && proceedToGame) {
         proceedToGame = false;
         fetch(`http://localhost:9000/wizard`, {
@@ -46,27 +44,42 @@ function sendPlayerCount(amount) {
 }
 
 function setName(name) {
-    if (this.event.key === "Enter") {
-        fetch(`http://localhost:9000/playerName?name=${name}`, {
-            method: "POST",
-            body: ""
-        }).then(res => {
-            if(res.redirected) {
-                window.location.replace(res.url)
-            } else {
-                window.location.replace(`http://localhost:9000/playerName`);
-            }
-        });
-    }
-}
-
-function playCard(idx) {
-    fetch(`http://localhost:9000/playCard?idx=${idx}`, {
+    fetch(`http://localhost:9000/playerName?name=${name}`, {
         method: "POST",
-        body: "",
-    }).then((res) => {
-        window.location.replace(res.url);
-    });
+        body: ""
+    }).then(res => {
+        if(res.redirected) {
+            window.location.replace(res.url)
+        } else {
+            window.location.replace(`http://localhost:9000/playerName`);
+        }
+    })
+}
+function playCard(idx) {
+    $.ajax(
+        {type:"POST",
+            url:`http://localhost:9000/playCard?idx=${idx}`,
+            data:"",
+            success: function(data) {
+                console.log(data)
+                if(data.redirect) {
+                    window.location.replace(data.redirect)
+                    return
+                }
+                $("#playerNameTopLeft").text(data.player.name + 's Turn')
+                $("#playerHandCards").empty()
+                data.player.hand.cards.forEach((card, index) => {
+                    $("#playerHandCards").append($(
+                        `<div class="animated-card"><img class="playingCard" src=${card.url} value=${index}/></div>`))
+                })
+                $("#playedCardsStack").append($(
+                    `<div class="animated-card"><img class="playingCard" src=${data.playedCard.url}/></div>`
+                ))
+            },
+            error: function(data) {
+                console.log("Card not playable!")
+            },
+        })
 }
 
 function setTricks(tricks) {
@@ -107,7 +120,53 @@ function setTrump(color) {
 
 
 
+// Events -----------------
 
+$(document).ready(function(){
+
+    $("#playerHandCards").on("click", ".animated-card", function() {
+        playCard($(this).index());
+    });
+
+    $("#playWizard").click(function(ev) {
+        console.log("Start Game")
+        play()
+    })
+
+    $("#howToPlayBtn").click(function(ev) {
+        console.log("How to play ?")
+        howToPlay()
+    })
+
+    $(".pla").click(function(ev) {
+        console.log("Set Player Count")
+        sendPlayerCount(ev.target.innerText)
+    })
+
+    $("#name").keydown(function(ev) {
+        console.log("Set Player Name")
+        if (ev.key === "Enter") {
+            setName(ev.target.value)
+        }
+    })
+
+    $("#trickOverOK").click(function(ev) {
+        console.log("Trick over ok")
+        proceedToTrickAmount()
+    })
+
+    $("#tricks").keydown(function(ev) {
+        console.log("Set Tricks")
+        if (ev.key === "Enter") {
+            setTricks(ev.target.value)
+        }
+    })
+
+
+
+});
+
+// Events -----------------
 
 
 

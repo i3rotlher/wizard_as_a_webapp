@@ -1,13 +1,12 @@
 package controllers
 
-import de.htwg.se.wizard.aview.gui.SwingGUI
 import de.htwg.se.wizard.aview.{TUI, WebUI}
 import de.htwg.se.wizard.control.controllerBaseImpl._
 import de.htwg.se.wizard.model.FileIO.JSON.Impl_JSON
 import de.htwg.se.wizard.model.cardsComponent.Card
 import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Gamestate
 import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
-import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.libs.json._
 
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
@@ -19,6 +18,43 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   val tui = new TUI(controller)
   // val gui = new SwingGUI(controller)
   val wui = new WebUI(controller)
+
+  // JSON --------------------------------------------------------------------------------------------
+  implicit val cardWrite = new Writes[Card] {
+    override def writes(c: Card): JsValue = Json.obj(
+      "url" -> getCardPath(c),
+      "num" -> c.num,
+      "colour" -> c.colour,
+    )
+  };
+
+  implicit val cardList = new Writes[List[Card]] {
+    override def writes(p: List[Card]): JsValue = Json.obj(
+      "cards" -> p,
+    )
+  };
+
+  implicit val playerWrite = new Writes[Player] {
+    override def writes(p: Player): JsValue = Json.obj(
+      "name" -> p.name,
+      "hand" -> p.hand,
+    )
+  };
+
+  def getCardPath(card: Card): String = {
+    var result = "/assets//images/card-images/";
+    if (card.num == 0) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-fool.png"
+    }
+    if (card.num == 14) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-wizard.png"
+    }
+    result += card.colour
+    result + card.num + ".png"
+  }
+  // JSON --------------------------------------------------------------------------------------------
 
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
@@ -65,6 +101,11 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
+
+    // if still setTrick return JSON of Player and Played Cards
+    controller.get_player(controller.active_player_idx())
+    // else goTo playCard
+
     controller.set_guess(amount)
     System.out.println(wui.getState())
     if(!wui.getState().isInstanceOf[next_guess]) {
@@ -78,19 +119,21 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>
+
     val round = controller.getGamestate().getRound_number
+    val playedCard = controller.get_player(controller.active_player_idx()).hand(idx)
     controller.play_card(controller.get_player(controller.active_player_idx()).hand(idx))
     if (!wui.getState().isInstanceOf[next_player_card]) {
       val next_round = controller.getGamestate().getRound_number
       if (round != next_round) {
-        Redirect("/roundOver")
+        Ok(Json.obj(("redirect", "/roundOver")))
       } else if (wui.getState().isInstanceOf[card_not_playable]) {
-        Redirect("/playCard")
+        NotAcceptable("CardNotPlayable")
       } else {
-        Redirect("/trickOver")
+        Ok(Json.obj(("redirect", "/trickOver")))
       }
     } else {
-      Redirect("/playCard")
+      Ok(Json.obj(("player", controller.get_player(controller.active_player_idx())), ("playedCard", playedCard)))
     }
 
   }
@@ -116,42 +159,6 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   def getHi() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.hi("Test"))
   }
-
-  // JSON --------------------------------------------------------------------------------------------
-  implicit val cardWrite = new Writes[Card] {
-    override def writes(c: Card): JsValue = Json.obj(
-      "url" -> getCardPath(c),
-      "num" -> c.num,
-      "colour" -> c.colour
-    )
-  };
-
-  implicit val cardList = new Writes[List[Card]] {
-    override def writes(p: List[Card]): JsValue = Json.obj(
-      "cards" -> p,
-    )
-  };
-
-  implicit val playerWrite = new Writes[Player] {
-    override def writes(p: Player): JsValue = Json.obj(
-      "name" -> p.name,
-      "hand" -> p.hand,
-    )
-  };
-  def getCardPath(card: Card): String = {
-    var result = "/images/card-images/";
-    if (card.num == 0) {
-      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
-      return result + "-fool.png"
-    }
-    if (card.num == 14) {
-      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
-      return result + "-wizard.png"
-    }
-    result += card.colour
-    result + card.num + ".png"
-  }
-  // JSON --------------------------------------------------------------------------------------------
 
 }
 

@@ -7,7 +7,7 @@
 <div class="container-fluid">
         <div class="row">
             <div class="col-2">
-                <h1>@player.name's Turn</h1>
+                <h1 id="playerNameTopLeft">@player's Turn</h1>
             </div>
             <div class="col-8">
                 <h1 class="actionDescription">Phase: Play a Card</h1>
@@ -24,7 +24,7 @@
             <div class="playedCards col-4">
             <h2>Played Cards:</h2>
                 <div class="animated-card-hand-container">
-                    <div class="animated-card-hand-played">
+                    <div id="playedCardsStack" class="animated-card-hand-played">
                     @for(card <- playedCards) {
                         <div class="animated-card">
                             <img class="playingCard" src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
@@ -43,10 +43,10 @@
             <div class="col-12">
                 <div class="playCardBackground">
                     <div class="animated-card-hand-container">
-                        <div class="animated-card-hand">
+                        <div id="playerHandCards" class="animated-card-hand">
                         @for(card <- player.hand) {
                             <div class="animated-card">
-                                <img class="playingCard" onclick="playCard(@player.hand.indexOf(card))"
+                                <img class="playingCard"
                                 src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
                             </div>
                         }
