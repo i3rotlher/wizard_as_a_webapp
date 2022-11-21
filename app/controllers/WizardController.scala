@@ -6,6 +6,9 @@ import de.htwg.se.wizard.control.controllerBaseImpl._
 import de.htwg.se.wizard.model.FileIO.JSON.Impl_JSON
 import de.htwg.se.wizard.model.cardsComponent.Card
 import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Gamestate
+import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
+import play.api.libs.json.{JsValue, Json, Writes}
+
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
 
@@ -113,6 +116,43 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
   def getHi() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.hi("Test"))
   }
+
+  // JSON --------------------------------------------------------------------------------------------
+  implicit val cardWrite = new Writes[Card] {
+    override def writes(c: Card): JsValue = Json.obj(
+      "url" -> getCardPath(c),
+      "num" -> c.num,
+      "colour" -> c.colour
+    )
+  };
+
+  implicit val cardList = new Writes[List[Card]] {
+    override def writes(p: List[Card]): JsValue = Json.obj(
+      "cards" -> p,
+    )
+  };
+
+  implicit val playerWrite = new Writes[Player] {
+    override def writes(p: Player): JsValue = Json.obj(
+      "name" -> p.name,
+      "hand" -> p.hand,
+    )
+  };
+  def getCardPath(card: Card): String = {
+    var result = "/images/card-images/";
+    if (card.num == 0) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-fool.png"
+    }
+    if (card.num == 14) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-wizard.png"
+    }
+    result += card.colour
+    result + card.num + ".png"
+  }
+  // JSON --------------------------------------------------------------------------------------------
+
 }
 
 object GetCardPath {
