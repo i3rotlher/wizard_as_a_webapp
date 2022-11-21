@@ -107,7 +107,7 @@ function setTricks(tricks) {
                         $("#playerHandCards").append($(
                             `<div class="animated-card"><img class="playingCard" src=${card.url} value=${index}/></div>`))
                     })
-                    $("#name").val(0)
+                    $("#tricks").val('0')
                 },
                 error: function(data) {
                     console.log("Card not playable!")
@@ -185,9 +185,6 @@ $(document).ready(function(){
             setTricks(ev.target.value)
         }
     })
-
-
-
 });
 
 // Events -----------------
