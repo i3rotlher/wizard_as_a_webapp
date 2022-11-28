@@ -1,16 +1,17 @@
 package controllers
 
 import akka.actor.{Actor, ActorRef}
-import de.htwg.se.wizard.control.controllerBaseImpl._
+import de.htwg.se.wizard.control.controllerBaseImpl.{player_create, _}
+import play.api.libs.json._
 
 import scala.swing.Reactor
 import scala.swing.event.Event
 import scala.util.{Failure, Success, Try}
 
-class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor with Reactor {
+class WizardWebSocketActor(out: ActorRef, controller: Controller, playerIdx: Int) extends Actor with Reactor {
 
   listenTo(controller)
-  var state: Event = null
+  var state: Event = new player_create
 
   reactions += {
     case event: game_started => game_start()
@@ -19,7 +20,7 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor 
     case event: Wizard_trump => wizard_trump()
     case event: set_Wizard_trump => state = event
     case event: player_create =>
-      println("Player " + (controller.active_player_idx() + 1) + " whats your name ? / press r to undo previous name / press y to redo change")
+      showView("playerName")
       state = event
     case event: name_ok => state = event
     case event: next_guess =>
@@ -29,9 +30,9 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor 
       play_card()
       state = event
     case event: card_not_playable =>
-      println("This card is not playable right now!\n Choose a different number!")
+      out ! Json.obj("event" -> "card_not_playable").toString()
     case event: mini_over =>
-      println("Trick won by " + controller.get_mini_winner().getName + "!")
+      showView("trickOver")
     case event: round_over =>
       println(controller.getGamestate().getGame_table)
     case event: game_over =>
@@ -42,6 +43,7 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor 
   }
 
   def processInput(input: String): Unit = {
+    println("State: " + state)
     state match {
       case null => game_start()
       case event: get_Amount => check_Amount(input)
@@ -67,24 +69,14 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor 
   }
 
   def create_player(input: String): Unit = {
-    input match {
-      case "y" => controller.redo_player()
-      case "r" => controller.undo_player()
-      case _ => controller.create_player(input)
-    }
+    controller.create_player(input)
   }
 
   def start_round(): Unit = {
-    println("- - - - - Round " + (controller.getGamestate().getRound_number + 1) + " started - - - - -")
-    println("Generating hands . . .")
-    println("Generating trumpcard . . .\n\n\n")
   }
 
   def wizard_trump(): Unit = {
-    println("A wizard has been drawn as the trump card!")
-    val player = controller.get_player((controller.active_player_idx() - 1 + controller.player_amount()) % controller.player_amount())
-    println(player.getName + " which color do you want to be trump? [red,blue,yellow,green]")
-    println("Your cards: " + player.showHand())
+    showView("trump")
   }
 
   def check_trump_wish(input: String): Boolean = {
@@ -97,10 +89,7 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor 
   }
 
   def guess(): Unit = {
-    val active_player = controller.get_player(controller.active_player_idx())
-    println("Trump card: " + controller.getGamestate().getTrump_card)
-    println(active_player.getName + " how many tricks are you going to make?")
-    println(active_player.showHand() + "\n\n\n\n\n")
+    showView("setTrickAmount")
   }
 
   def toInt(s: String): Try[Int] = Try(Integer.parseInt(s.trim))
@@ -121,28 +110,36 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller) extends Actor 
   }
 
   def play_card(): Unit = {
-    val active_player = controller.get_player(controller.active_player_idx())
-    println("Trump card: " + controller.getGamestate().getTrump_card)
-    println(active_player.getName + " which card do you want to play ?")
-    println("Your cards: " + active_player.showHand() + "\n\n\n\n\n")
+    showView("playCard")
   }
 
   def get_card(input: String): Unit = {
     val active_player = controller.get_player(controller.active_player_idx())
-    var list = List[String]()
-    for (x <- 1 to active_player.getHand.size) {
-      list = list :+ x.toString
-    }
-    if (!list.contains(input)) {
-      println("Insert a valid card number!")
+    controller.play_card(active_player.getHand(input.toInt))
+  }
+
+  def showView(viewName: String): Unit = {
+    val url = "http://localhost:9000/" + viewName
+    if (playerIdx == controller.active_player_idx()) {
+      out ! Json.obj("fetch" -> url).toString()
     } else {
-      controller.play_card(active_player.getHand(input.toInt - 1))
+      out ! Json.obj("event" -> "NotYourTurn", "activePlayer" -> controller.get_player(controller.active_player_idx()).name).toString()
     }
   }
 
 
   def receive = {
     case msg: String =>
-      processInput(msg)
+      println(controller)
+      if (msg == "whoAmI") {
+        out ! Json.obj("whoAmI" -> playerIdx).toString()
+      } else {
+        println("Player: " + playerIdx + " send: " + msg)
+        println("Active Player: " + controller.active_player_idx())
+        if (playerIdx == controller.active_player_idx()) {
+          if (msg != "MyTurn?") processInput(msg)
+        }
+        else out ! Json.obj("event" -> "NotYourTurn", "activePlayer" -> controller.get_player(controller.active_player_idx()).name).toString()
+      }
   }
 }

@@ -8,23 +8,23 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /                           controllers.WizardController.index()
 
-GET     /hi                 controllers.WizardController.getHi()
+#GET     /hi                 controllers.WizardController.getHi()
 
 # POST ROUTES
 
 POST    /playerCount        controllers.WizardController.setPlayerCount(count: Int)
 GET     /playerCount        controllers.WizardController.getPlayerCountView()
-
-POST    /playerName         controllers.WizardController.setName(name: String)
+#
+#POST    /playerName         controllers.WizardController.setName(name: String)
 GET     /playerName         controllers.WizardController.setNameView()
 
-POST    /trump              controllers.WizardController.setTrump(color: String)
+#POST    /trump              controllers.WizardController.setTrump(color: String)
 GET     /trump              controllers.WizardController.getTrump()
 
-POST    /setTrickAmount     controllers.WizardController.setTrickAmount(amount: Int)
+#POST    /setTrickAmount     controllers.WizardController.setTrickAmount(amount: Int)
 GET     /setTrickAmount     controllers.WizardController.getTrickAmount()
 
-POST    /playCard           controllers.WizardController.playCard(idx: Int)
+#POST    /playCard           controllers.WizardController.playCard(idx: Int)
 GET     /playCard           controllers.WizardController.playCardView()
 
 GET     /wizard             controllers.WizardController.wizard()
@@ -36,3 +36,5 @@ GET     /trickOver           controllers.WizardController.trickOver()
 GET     /roundOver          controllers.WizardController.roundOver()
 
 GET     /websocket          controllers.WizardController.socket
+
+GET     /reset              controllers.WizardController.reset()

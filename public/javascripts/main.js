@@ -2,7 +2,11 @@ function howToPlay() {
     fetch(`http://localhost:9000/howToPlay`, {
         method: "GET"
     }).then(res => {
-        window.location.replace(res.url);
+        fetch(res.url, {
+            method: "GET",
+        }).then(res => {
+            document.write(res);
+        });
     });
 }
 
@@ -11,16 +15,11 @@ var proceedToGame = false;
 document.addEventListener("keydown", function(e) {
     if(e.code === "Enter" && proceedToGame) {
         proceedToGame = false;
-        fetch(`http://localhost:9000/wizard`, {
-            method: "GET"
-        }).then(res => {
-            window.location.replace(res.url);
-        });
+        window.location.replace("http://localhost:9000/playerCount")
     }
 });
 
 function play() {
-
     document.getElementById("playGameContainer").setAttribute("style", "display: none")
     $("#loadGameContainer").css("display", "inline");
     setTimeout(function () {
@@ -35,119 +34,57 @@ function play() {
 
 function sendPlayerCount(amount) {
     fetch(`http://localhost:9000/playerCount?count=${amount}`, {
-        method: "POST",
-        body: ""
+        method: "POST"
     }).then(res => {
-        window.location.replace(res.url);
-
+        window.location.replace("http://localhost:9000/playerName")
     });
 }
 
+var socket;
+
+socket = new WebSocket("ws://localhost:9000/websocket")
+socket.onopen = function(){
+    console.log("Socket opened")
+    socket.send("MyTurn?")
+}
+socket.onmessage = function(message) {
+    console.log("Socket received Massage: ", JSON.parse(message.data))
+    reactToSocket(JSON.parse(message.data))
+}
+socket.onerror = function(){
+    console.log("Socket received error!")
+    // tell other players sorry:
+    // document.body.parentNode.innerHTML = "Sorry Dude they started without you :("
+
+}
+socket.onclose = function(){
+    console.log("WebSocket closed!")
+}
+
 function setName(name) {
-    fetch(`http://localhost:9000/playerName?name=${name}`, {
-        method: "POST",
-        body: ""
-    }).then(res => {
-        if(res.redirected) {
-            window.location.replace(res.url)
-        } else {
-            $("#playerNameText").text(`Player ` + (parseInt($("#playerNameText").attr("value")) + 1) + ` please insert your name:`)
-            $("#playerNameText").attr("value", parseInt($("#playerNameText").attr("value")) + 1)
-            $("#name").val('')
-        }
-    })
+    socket.send(name)
 }
 function playCard(idx) {
-    $.ajax(
-        {type:"POST",
-            url:`http://localhost:9000/playCard?idx=${idx}`,
-            data:"",
-            success: function(data) {
-                console.log(data)
-                if(data.redirect) {
-                    window.location.replace(data.redirect)
-                    return
-                }
-                $("#playerNameTopLeft").text(data.player.name + "'s Turn")
-                $("#playerHandCards").empty()
-                data.player.hand.cards.forEach((card, index) => {
-                    $("#playerHandCards").append($(
-                        `<div class="animated-card"><img class="playingCard" src=${card.url} value=${index}/></div>`))
-                })
-                if (data.playedCard === "RESET") {
-                    $("#playedCardsStack").empty()
-                } else {
-                    $("#playedCardsStack").append($(
-                        `<div class="animated-card"><img class="playingCard" src=${data.playedCard.url}/></div>`
-                    ))
-                }
-            },
-            error: function(data) {
-                console.log("Card not playable!")
-                window.alert("Card not playable! \n First color need to be served.")
-            },
-        })
+    socket.send(idx)
 }
 
 function setTricks(tricks) {
     if (this.event.key === "Enter") {
-        $.ajax(
-            {type:"POST",
-                url:`http://localhost:9000/setTrickAmount?amount=${tricks}`,
-                data:"",
-                success: function(data) {
-                    console.log(data)
-                    if(data.redirect) {
-                        window.location.replace(data.redirect)
-                        return
-                    }
-                    $("#playerNameTopLeft").text(data.name + "'s Turn")
-                    $("#playerHandCards").empty()
-                    data.hand.cards.forEach((card, index) => {
-                        $("#playerHandCards").append($(
-                            `<div class="animated-card"><img class="playingCard" src=${card.url} value=${index}/></div>`))
-                    })
-                    $("#tricks").val('0')
-                },
-                error: function(data) {
-                    console.log("Card not playable!")
-                },
-            })
-    }
-}
-
-function proceedToTrickAmount(roundOver) {
-    if(roundOver === "true") {
-        window.location.replace(`http://localhost:9000/roundOver`)
-    }
-    else {
-        window.location.replace(`http://localhost:9000/playCard`)
-    }
-}
-
-function proceed(trump) {
-    if (trump) {
-        window.location.replace(`http://localhost:9000/trump`)
-    } else {
-        window.location.replace(`http://localhost:9000/setTrickAmount`)
+        socket.send(tricks)
     }
 }
 
 function setTrump(color) {
-    fetch(`http://localhost:9000/trump?color=${color}`, {
-        method: "POST",
-        body: ""
-    }).then(res => {
-        window.location.replace(res.url)
-    });
+    socket.send(color)
 }
-
-
 
 // Events -----------------
 
 $(document).ready(function(){
+    addEventListeners()
+});
 
+function addEventListeners() {
     $("#playerHandCards").on("click", ".animated-card", function() {
         playCard($(this).index());
     });
@@ -176,7 +113,7 @@ $(document).ready(function(){
 
     $("#trickOverOK").click(function(ev) {
         console.log("Trick over ok")
-        proceedToTrickAmount(ev.target.value)
+        // proceedToTrickAmount(ev.target.value)
     })
 
     $("#tricks").keydown(function(ev) {
@@ -185,39 +122,60 @@ $(document).ready(function(){
             setTricks(ev.target.value)
         }
     })
-});
-
+}
 // Events -----------------
 
+// Client Reactor ----------
 
+function reactToSocket(msg) {
+    if (msg.fetch) {
+        fetch(msg.fetch, {
+            method: "GET"
+        }).then((res) => {
+                res.text().then((text)=> {
+                    document.body.parentNode.innerHTML = text
+                    addEventListeners()
+                } )
+        })
+        return
+    }
 
-
-
-
-// WebSocket ----------------
-
-var socket = new WebSocket("ws://localhost:9000/websocket")
-socket.onopen = function(){
-    console.log("Socket opened") }
-socket.onmessage = function(message) {
-    console.log("Socket received Massage: " + message.data)
-    document.write(message.data)
+    if (msg.event) {
+        switch(msg.event) {
+            case "card_not_playable":
+                window.alert("Card not playable! \n First color need to be served.")
+                break;
+            case "NotYourTurn":
+                $("#waitingForPlayers").css("display", "grid");
+                $("#waitingPlayer").text(`Waiting for ${msg.activePlayer}`)
+                break;
+        }
+    }
 }
-socket.onerror = function(){
-    console.log("Socket received error: ") }
-socket.onclose = function(){
-    console.log("WebSocket closed!") }
-
-
-// WebSocket ----------------
-
 
 
 // Client Reactor ----------
 
 
 
-// Client Reactor ----------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
