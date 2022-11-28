@@ -194,11 +194,30 @@ $(document).ready(function(){
 
 
 
+// WebSocket ----------------
+
+var socket = new WebSocket("ws://localhost:9000/websocket")
+socket.onopen = function(){
+    console.log("Socket opened") }
+socket.onmessage = function(message) {
+    console.log("Socket received Massage: " + message.data)
+    document.write(message.data)
+}
+socket.onerror = function(){
+    console.log("Socket received error: ") }
+socket.onclose = function(){
+    console.log("WebSocket closed!") }
+
+
+// WebSocket ----------------
 
 
 
+// Client Reactor ----------
 
 
+
+// Client Reactor ----------
 
 
 
