@@ -68,7 +68,7 @@ function playCard(idx) {
                     window.location.replace(data.redirect)
                     return
                 }
-                $("#playerNameTopLeft").text(data.player.name + 's Turn')
+                $("#playerNameTopLeft").text(data.player.name + "'s Turn")
                 $("#playerHandCards").empty()
                 data.player.hand.cards.forEach((card, index) => {
                     $("#playerHandCards").append($(

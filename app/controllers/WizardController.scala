@@ -1,5 +1,7 @@
 package controllers
 
+import akka.actor._
+import akka.stream.Materializer
 import de.htwg.se.wizard.aview.{TUI, WebUI}
 import de.htwg.se.wizard.control.controllerBaseImpl._
 import de.htwg.se.wizard.model.FileIO.JSON.Impl_JSON
@@ -7,12 +9,13 @@ import de.htwg.se.wizard.model.cardsComponent.Card
 import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Gamestate
 import de.htwg.se.wizard.model.playerComponent.PlayerBaseImpl.Player
 import play.api.libs.json._
+import play.api.libs.streams.ActorFlow
 
 import javax.inject.{Inject, Singleton}
-import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
+import play.api.mvc._
 
 @Singleton
-class WizardController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class WizardController @Inject()(val controllerComponents: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends BaseController {
 
   val controller = Controller(Gamestate(), Impl_JSON())
   // val tui = new TUI(controller)
@@ -159,6 +162,17 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     Ok(views.html.hi("Test"))
   }
 
+  def socket = WebSocket.accept[String, String] { request =>
+      ActorFlow.actorRef { out =>
+        WizardWebSocketActorFactory.create(out, controller)
+      }
+  }
+}
+
+object WizardWebSocketActorFactory {
+  def create(out: ActorRef, controller: Controller): Props = {
+    Props(new WizardWebSocketActor(out, controller))
+  }
 }
 
 object GetCardPath {

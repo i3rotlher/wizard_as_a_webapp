@@ -34,3 +34,5 @@ GET     /howToPlay          controllers.WizardController.howTo()
 GET     /trickOver           controllers.WizardController.trickOver()
 
 GET     /roundOver          controllers.WizardController.roundOver()
+
+GET     /websocket          controllers.WizardController.socket
