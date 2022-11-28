@@ -147,7 +147,7 @@ function reactToSocket(msg) {
                 break;
             case "NotYourTurn":
                 $("#waitingForPlayers").css("display", "grid");
-                $("#waitingPlayer").text(`Waiting for ${msg.activePlayer}`)
+                $("#waitingPlayer").html(`<div id="waitingPlayer">Waiting for ${msg.activePlayer} <span>.</span><span>.</span><span>.</span></div>`)
                 break;
         }
     }
