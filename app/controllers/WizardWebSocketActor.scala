@@ -84,6 +84,7 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller, playerIdx: Int
       println("You may only choose one of these colors red,blue,yellow,green")
       return false
     }
+    controller.setGamestate(controller.getGamestate().set_active_player_idx((controller.active_player_idx()+1)%controller.player_amount()))
     controller.wish_trump(input)
     true
   }
