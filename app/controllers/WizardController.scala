@@ -126,7 +126,6 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     list.foreach(url => {res += "\"" + url + "\","})
     res = res.substring(0, res.length-1)
     res += "]}"
-    print(res)
 
     Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table, res))
   }
