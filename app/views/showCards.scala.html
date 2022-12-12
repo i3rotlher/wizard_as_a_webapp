@@ -2,46 +2,15 @@
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Round
 
-@(player: Player, getCardPath: GetCardPath.type, trump: Card, playedCards: List[Card], rounds: List[Round], round: Int, players: List[Player])
+@(player: Player, getCardPath: GetCardPath.type, trump: Card, playedCards: String, rounds: List[Round], round: Int, players: List[Player], cards: String)
 @main("marketPlaceBackground") {
-<div class="container-fluid">
+    <div class="container-fluid">
         <div class="row" id="top-bar-container">
             <top-bar player="@player.name" phase="Play a Card"></top-bar>
         </div>
-        <div class="row row-cols-3">
-            <div class="playedCards col-4">
-            <h2>Played Cards:</h2>
-                <div class="animated-card-hand-container">
-                    <div id="playedCardsStack" class="animated-card-hand-played">
-                    @for(card <- playedCards) {
-                        <div class="animated-card">
-                            <img class="playingCard" src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
-                        </div>
-                    }
-                    </div>
-                </div>
-            </div>
-            <div class="col-4"></div>
-            <div class="trumpCard col-4">
-                <h2>Trump Card:</h2>
-                <img class="playingCard trump"
-                src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
-                />
-            </div>
-            <div class="col-12">
-                <div class="playCardBackground">
-                    <div class="animated-card-hand-container">
-                        <div id="playerHandCards" class="animated-card-hand">
-                        @for(card <- player.hand) {
-                            <div class="animated-card">
-                                <img class="playingCard"
-                                src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
-                            </div>
-                        }
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row row-cols-3" id="play-row-container">
+            <played-row path="@getCardPath.getTotalPath(trump)" :cards="@playedCards"></played-row>
+            <cards-row :cards="@cards"></cards-row>
         </div>
     </div>
 

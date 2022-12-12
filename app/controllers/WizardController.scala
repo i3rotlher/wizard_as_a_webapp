@@ -156,8 +156,34 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 //
 //  }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath, controller.getGamestate().getTrump_card, controller.getGamestate().getPlayedCards, controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
-      controller.getGamestate().getPlayers))
+    var list: List[String] = List()
+    controller.get_player(controller.active_player_idx()).hand.foreach(card => {
+      list = list.appended(GetCardPath.getTotalPath(card))
+    })
+
+    var res = "{cards: ["
+    list.foreach(url => {
+      res += "\"" + url + "\","
+    })
+    res = res.substring(0, res.length - 1)
+    res += "]}"
+
+
+    var playedList: List[String] = List()
+    controller.getGamestate().getPlayedCards.foreach(card => {
+      playedList = playedList.appended(GetCardPath.getTotalPath(card))
+    })
+
+    var playedRes = "{cards: ["
+    playedList.foreach(url => {
+      playedRes += "\"" + url + "\","
+    })
+    playedRes = playedRes.substring(0, playedRes.length - 1)
+    playedRes += "]}"
+    if (playedList.length == 0) playedRes = "{cards: []}"
+
+    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath, controller.getGamestate().getTrump_card, playedRes, controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
+      controller.getGamestate().getPlayers, res))
   }
 
   def howTo() = Action { implicit request: Request[AnyContent] =>

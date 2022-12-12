@@ -97,8 +97,8 @@ function renderVue()  {
 
 
 
-    const playView_app = Vue.createApp()
-    playView_app.component('guess-row', {
+    const guessView_app = Vue.createApp()
+    guessView_app.component('guess-row', {
         props: ['path'],
         template: ` <div class="trickInsert col-8">
                 <h2 style="text-align: start">How many tricks are you going to make?</h2>
@@ -118,7 +118,7 @@ function renderVue()  {
             </div>`
     })
 
-    playView_app.component('cards-row', {
+    guessView_app.component('cards-row', {
         props: ['cards'],
         template: `<div class="col-12">
                 <div class="playCardBackground">
@@ -133,8 +133,55 @@ function renderVue()  {
                 </div>
             </div>`
     })
+    guessView_app.mount('#guess-row-container')
 
-    playView_app.mount('#guess-row-container')
+
+
+
+
+
+
+
+
+
+    const playView_app = Vue.createApp()
+    playView_app.component('played-row', {
+        props: ['path', 'cards'],
+        template: `<div class="playedCards col-4">
+            <h2>Played Cards:</h2>
+                <div class="animated-card-hand-container">
+                    <div id="playedCardsStack" class="animated-card-hand-played">
+                        <div class="animated-card" v-for="card in cards.cards">
+                            <img class="playingCard" :src="card" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4"></div>
+            <div class="trumpCard col-4">
+                <h2>Trump Card:</h2>
+                <img class="playingCard trump"
+                :src="path"
+                />
+            </div>`
+    })
+
+    playView_app.component('cards-row', {
+        props: ['cards'],
+        template: `<div class="col-12">
+                <div class="playCardBackground">
+                    <div class="animated-card-hand-container">
+                        <div id="playerHandCards" class="animated-card-hand">            
+                            <div class="animated-card" v-for="card in cards.cards">
+                                <img class="playingCard"
+                                :src="card" />
+                            </div>                       
+                        </div>
+                    </div>
+                </div>
+            </div>`
+    })
+    playView_app.mount('#play-row-container')
 
     addEventListeners()
 }

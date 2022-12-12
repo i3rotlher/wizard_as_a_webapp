@@ -8,7 +8,6 @@
         <div class="row" id="top-bar-container">
             <top-bar player="@player.name" phase="Guess Trick Amount"></top-bar>
         </div>
-
         <div class="row row-cols-3" id="guess-row-container">
             <guess-row path="@getCardPath.getTotalPath(trump)"></guess-row>
             <cards-row :cards="@cards"></cards-row>
