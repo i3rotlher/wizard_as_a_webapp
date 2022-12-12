@@ -113,7 +113,7 @@ function addEventListeners() {
 
     $("#trickOverOK").click(function(ev) {
         console.log("Trick over ok")
-        // proceedToTrickAmount(ev.target.value)
+        proceedToTrickAmount(ev.target.value)
     })
 
     $("#tricks").keydown(function(ev) {
@@ -135,6 +135,7 @@ function reactToSocket(msg) {
                 res.text().then((text)=> {
                     document.body.parentNode.innerHTML = text
                     addEventListeners()
+                    renderVue()
                 } )
         })
         return
@@ -152,7 +153,6 @@ function reactToSocket(msg) {
         }
     }
 }
-
 
 // Client Reactor ----------
 

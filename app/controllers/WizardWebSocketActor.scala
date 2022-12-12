@@ -30,9 +30,9 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller, playerIdx: Int
       play_card()
       state = event
     case event: card_not_playable =>
-      out ! Json.obj("event" -> "card_not_playable").toString()
+      if (playerIdx == controller.active_player_idx()) out ! Json.obj("event" -> "card_not_playable").toString()
     case event: mini_over =>
-      showView("trickOver")
+      // >showView("trickOver")
     case event: round_over =>
       println(controller.getGamestate().getGame_table)
     case event: game_over =>

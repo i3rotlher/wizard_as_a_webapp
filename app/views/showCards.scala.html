@@ -5,20 +5,8 @@
 @(player: Player, getCardPath: GetCardPath.type, trump: Card, playedCards: List[Card], rounds: List[Round], round: Int, players: List[Player])
 @main("marketPlaceBackground") {
 <div class="container-fluid">
-        <div class="row">
-            <div class="col-2">
-                <h1 id="playerNameTopLeft">@player's Turn</h1>
-            </div>
-            <div class="col-8">
-                <h1 class="actionDescription">Phase: Play a Card</h1>
-            </div>
-            <div class="col-2">
-                    <!-- Button trigger modal -->
-                <button type="button" class="showScoreBoardBtn btn btn-secondary" data-bs-toggle="modal" data-bs-target="#scoreBoardModal">
-                    <i class="bi bi-table"></i><br>
-                    Score
-                </button>
-            </div>
+        <div class="row" id="top-bar-container">
+            <top-bar player="@player.name" phase="Play a Card"></top-bar>
         </div>
         <div class="row row-cols-3">
             <div class="playedCards col-4">
@@ -78,7 +66,7 @@
                         <tbody>
                         @for((round, i) <- rounds.zipWithIndex.dropRight(1)) {
                             <tr>
-                                <th scope="row">@(i+1)</th>
+                                <td scope="row">@(rounds.indexOf(round)+1)</td>
                                 @for(idx <- players.indices) {
                                     <td>
                                         @round.results(idx) | @round.guessed_tricks(idx)

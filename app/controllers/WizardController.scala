@@ -119,7 +119,16 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 //    }
 //  }
   def getTrickAmount() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table))
+    var list: List[String] = List()
+    controller.get_player(controller.active_player_idx()).hand.foreach(card => {list = list.appended(GetCardPath.getTotalPath(card))})
+
+    var res = "{cards: ["
+    list.foreach(url => {res += "\"" + url + "\","})
+    res = res.substring(0, res.length-1)
+    res += "]}"
+    print(res)
+
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table, res))
   }
 //
 //  def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>
@@ -190,6 +199,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
       controller = null
       connected_players = 0
       wui = null
+      println("\n\n\n\n___________ Game Reset! ___________")
       Accepted("Game reset")
     }
   }
@@ -205,6 +215,20 @@ object WizardWebSocketActorFactory {
 object GetCardPath {
   def getCardPath(card: Card): String = {
     var result = "/images/card-images/";
+    if (card.num == 0) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-fool.png"
+    }
+    if (card.num == 14) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-wizard.png"
+    }
+    result += card.colour
+    result + card.num + ".png"
+  }
+
+  def getTotalPath(card: Card): String = {
+    var result = "http://localhost:9000/assets//images/card-images/";
     if (card.num == 0) {
       result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
       return result + "-fool.png"

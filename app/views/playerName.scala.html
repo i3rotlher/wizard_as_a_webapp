@@ -1,9 +1,6 @@
 @(idx: Int)
 @main("marketPlaceBackground") {
-    <div class="hor">
-        <div class="container h-100 playerName">
-            <h2 id="playerNameText" value="@idx">Player @idx please insert your name:</h2>
-            <input class="form-control in" type="text" placeholder="your name ..." id="name" style="width:450px">
-        </div>
+    <div id="player-name-input-container">
+        <player-name-input player="@idx"></player-name-input>
     </div>
 }
