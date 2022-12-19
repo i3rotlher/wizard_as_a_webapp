@@ -1,0 +1,53 @@
+<template>
+  <div class="container-fluid">
+    <div class="row justify-content-end">
+      <button type="button" class="btn btn-secondary" id="howToPlayBtn" data-toggle="tooltip" data-placement="top"
+              title="How To Play ?">
+        <div id="rulesIcon"><i class="bi bi-book"></i><br>Rules</div>
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <h1>Welcome to Wizard!</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <img alt="AMIGO 6900 - Wizard, Kartenspiel"
+             src="https://cf.geekdo-images.com/4a3UjVGj7ZqwG8aGqWE0KQ__opengraph/img/G-8TrWY3gHxcLVzePwqXE3PZVyM=/fit-in/1200x630/filters:strip_icc()/pic5895064.jpg"
+             data-old-hires="https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SL1500_.jpg"
+             onload="markFeatureRenderForImageBlock(); if(this.width/this.height > 1.0){this.className += ' a-stretch-horizontal'}else{this.className += ' a-stretch-vertical'};this.onload='';setCSMReq('af');if(typeof addlongPoleTag === 'function'){ addlongPoleTag('af','desktop-image-atf-marker');};setCSMReq('cf')"
+             data-a-image-name="landingImage" class="a-dynamic-image a-stretch-vertical" id="landingImage"
+             data-a-dynamic-image="{&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SX466_.jpg&quot;:[584,466],&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SX425_.jpg&quot;:[533,425],&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SX569_.jpg&quot;:[713,569],&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SX679_.jpg&quot;:[851,679],&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SY355_.jpg&quot;:[355,283],&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SX522_.jpg&quot;:[654,522],&quot;https://m.media-amazon.com/images/I/81TXpl89AkL._AC_SY450_.jpg&quot;:[450,359]}"
+             style="max-width: 190px; max-height: 390px; border-radius:10px;  display:block;  margin:auto; filter: drop-shadow(2px 2px 5px black);">
+      </div>
+    </div>
+    <div class="row" id="playGameContainer">
+      <div class="col-12">
+        <h2 style="text-align: center; padding-top: 15px"> To start the game press here: </h2>
+      </div>
+      <div class="col-12" style="text-align: center;">
+        <button type="button" class="btn btn-secondary" id="playWizard" data-toggle="tooltip" data-placement="top"
+                title="Play the Game">
+          <div class="rainbow-text animated">Play Wizard <i class="bi bi-joystick"></i></div>
+        </button>
+      </div>
+    </div>
+    <div id="loadGameContainer" style="display: none" class="row">
+      <div class="col-12">
+        <h2 id="loadGame" class="loading"> A Master Wizard is creating your Game
+          <span>.</span><span>.</span><span>.</span></h2>
+        <div class="col-sm"><img style="margin: auto; display: flex;"
+                                 src="https://media.tenor.com/tDvhq0ZebWMAAAAi/wizard-rainbow.gif"></div>
+      </div>
+    </div>
+  </div>
+  <canvas id="canvas">Canvas is not supported in your browser.</canvas>
+</template>
+
+<script>
+export default {
+  name: 'indexComponent',
+
+};
+</script>

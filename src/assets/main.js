@@ -1,5 +1,3 @@
-/* eslint-disable */
-import $ from 'jquery';
 function howToPlay() {
     fetch(`http://localhost:9000/howToPlay`, {
         method: "GET"
@@ -17,7 +15,7 @@ var proceedToGame = false;
 document.addEventListener("keydown", function(e) {
     if(e.code === "Enter" && proceedToGame) {
         proceedToGame = false;
-        window.location.replace("http://localhost:9000/playerCount")
+        window.location.replace("http://localhost:9000/playerCount") // TODO: change let gameState -> 'playerCount' and rerender App
     }
 });
 
@@ -134,11 +132,11 @@ function reactToSocket(msg) {
         fetch(msg.fetch, {
             method: "GET"
         }).then((res) => {
-                res.text().then((text)=> {
-                    document.body.parentNode.innerHTML = text
-                    addEventListeners()
-                    renderVue()
-                } )
+            res.text().then((text)=> {
+                document.body.parentNode.innerHTML = text
+                addEventListeners()
+                renderVue()
+            } )
         })
         return
     }

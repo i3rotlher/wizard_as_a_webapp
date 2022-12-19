@@ -1,0 +1,412 @@
+@import css url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
+@import css url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+@import css url('https://fonts.cdnfonts.com/css/akapotsley');
+@import css url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+body {
+    font-family: 'akaPotsley', cursive !important;
+    font-weight: normal !important;
+    color: black !important;
+}
+.background {
+    background-image: url('https://pbs.twimg.com/media/E6btcNMXoAMFHOF?format=jpg&name=large');
+    background-size: cover;
+    background-position: center;
+    max-width: 100%;
+    height: auto;
+}
+.hor {
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.pla {
+    width: 200px;
+    height: 110px;
+    border-radius: 20px;
+    border: none;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRedn293ViBlZuQgEgmNx7lTt58pD9hFreT4XddKZhe7ZxdfH92jyncTe8-LqwJQswxc4g&usqp=CAU') no-repeat top left;
+    margin: 2px 8px;
+    font-size: 500%;
+    opacity: 0.75;
+}
+.pla:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+.in {
+    opacity: 0.75;
+    width: 250px;
+}
+.marketPlaceBackground {
+    background-image: url('https://pbs.twimg.com/media/E6btcNMXoAMFHOF?format=jpg&name=large');
+    background-size: cover;
+    background-position: center;
+    max-width: 100%;
+    height: auto;
+    background-image: url(https://pbs.twimg.com/media/E6btbxEWQAgdG-x?format=jpg&name=large);
+}
+#howToPlay {
+    color: rgba(0,0,15,0.66);
+}
+h1 {
+    color: #debd4f;
+    font-family: 'akaPotsley', cursive;
+    font-weight: normal;
+    margin-bottom: 4em;
+    text-align: center;
+    font-size: 450%;
+    text-shadow: 1px 1px 2px black;
+}
+h2 {
+    color: #debd4f;
+    font-family: 'akaPotsley', cursive;
+    font-weight: normal;
+    margin-bottom: 4em;
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
+}
+h3 {
+    color: #debd4f;
+    text-shadow: 1px 1px 2px black;
+}
+a {
+    color: black;
+}
+body,
+html {
+    height: 100%;
+    width: 100%;
+}
+.playerCountBtn {
+    color: #ea0303;
+}
+#howToPlayBtn {
+    width: 150px;
+    color: #debd4f;
+    background: none;
+    border: none;
+    text-shadow: 1px 1px 2px black;
+}
+#rulesIcon {
+    font-size: 25px;
+    -webkit-text-stroke-width: 1px;
+}
+#playWizard {
+    background: none;
+    border: none;
+    font-size: 45px;
+    text-shadow: 1px 1px 2px black;
+}
+#playWizard:disabled {
+    background: none;
+    border: none;
+    font-size: 45px;
+    text-shadow: 1px 1px 2px black;
+    color: #adb5bd;
+}
+.playCard {
+    margin-right: auto;
+    margin-left: auto;
+}
+.playingCard {
+    cursor: pointer;
+    width: 150px;
+    height: 230px;
+    filter: drop-shadow(3px 3px 5px black);
+    border: solid rgba(0,0,0,0.23);
+    border-radius: 15px;
+}
+.playerCard {
+    border-radius: 20px;
+    opacity: 1;
+}
+.playCardBackground {
+    background-size: cover;
+    border-radius: 20px;
+    padding: 15px;
+    margin-top: 45px;
+    background-color: #737419bd;
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-image: url("https://img.freepik.com/free-vector/flat-design-wood-texture-illustration_23-2149273581.jpg?w=1480&t=st=1667914799~exp=1667915399~hmac=175b2fe76c35a913c0f9715bf99072fb96357c831d39a14134409feefe246924");
+}
+.trump {
+    cursor: default;
+}
+.playerName {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.animated-card-hand,
+.animated-card {
+    aspect-ratio: 0.71428571428571;
+    width: inherit;
+    position: relative;
+    height: 150px;
+    top: -50%;
+}
+.animated-card-hand-played {
+    aspect-ratio: 0.71428571428571;
+    width: inherit;
+    position: relative;
+    height: 150px;
+    top: -50%;
+    transform: translateX(555%);
+}
+.animated-card {
+    border-radius: 2px;
+    position: absolute;
+    top: 50%;
+    transition: all 600ms cubic-bezier(.17,.67,.6,.97);
+}
+.animated-card:hover {
+    top: 30%;
+}
+.animated-card:nth-of-type(1) {
+    transform: translateX(-440%);
+}
+.animated-card:nth-of-type(2) {
+    transform: translateX(-400%);
+}
+.animated-card:nth-of-type(3) {
+    transform: translateX(-360%);
+}
+.animated-card:nth-of-type(4) {
+    transform: translateX(-320%);
+}
+.animated-card:nth-of-type(5) {
+    transform: translateX(-280%);
+}
+.animated-card:nth-of-type(6) {
+    transform: translateX(-240%);
+}
+.animated-card:nth-of-type(7) {
+    transform: translateX(-200%);
+}
+.animated-card:nth-of-type(8) {
+    transform: translateX(-160%);
+}
+.animated-card:nth-of-type(9) {
+    transform: translateX(-120%);
+}
+.animated-card:nth-of-type(10) {
+    transform: translateX(-80%) rotate(-3.2deg);
+}
+.animated-card:nth-of-type(11) {
+    transform: translateX(-40%) rotate(2.2deg);
+}
+.animated-card:nth-of-type(12) {
+    transform: translateX(0%) rotate(-2.2deg);
+}
+.animated-card:nth-of-type(13) {
+    transform: translateX(40%) rotate(3.2deg);
+}
+.animated-card:nth-of-type(14) {
+    transform: translateX(80%) rotate(-3.2deg);
+}
+.animated-card:nth-of-type(15) {
+    transform: translateX(120%) rotate(3.2deg);
+}
+.animated-card:nth-of-type(16) {
+    transform: translateX(160%) rotate(-3.2deg);
+}
+.animated-card:nth-of-type(17) {
+    transform: translateX(200%) rotate(2.2deg);
+}
+.animated-card:nth-of-type(18) {
+    transform: translateX(240%) rotate(-2.2deg);
+}
+.animated-card:nth-of-type(19) {
+    transform: translateX(280%) rotate(3.2deg);
+}
+.animated-card:nth-of-type(20) {
+    transform: translateX(320%) rotate(-3.2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(1) {
+    transform: translate(-440%) rotate(2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(2) {
+    transform: translate(-400%) rotate(-2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(3) {
+    transform: translate(-360%) rotate(-3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(4) {
+    transform: translate(-320%) rotate(3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(5) {
+    transform: translate(-280%) rotate(-3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(6) {
+    transform: translate(-240%) rotate(3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(7) {
+    transform: translate(-200%) rotate(-2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(8) {
+    transform: translate(-160%) rotate(2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(9) {
+    transform: translate(-120%) rotate(-2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(10) {
+    transform: translate(-80%) rotate(2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(11) {
+    transform: translate(-40%) rotate(-3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(12) {
+    transform: translate(0%) rotate(3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(13) {
+    transform: translate(40%) rotate(-2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(14) {
+    transform: translate(80%) rotate(2deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(15) {
+    transform: translate(120%) rotate(-3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(16) {
+    transform: translate(160%) rotate(3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(17) {
+    transform: translate(200%) rotate(-3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(18) {
+    transform: translate(240%) rotate(3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(19) {
+    transform: translate(280%) rotate(-3deg);
+}
+.animated-card-hand:hover > .animated-card:nth-of-type(20) {
+    transform: translate(320%) rotate(3deg);
+}
+.animated-card-hand-container {
+    display: grid;
+    height: 240px;
+    margin: 0;
+    place-items: center;
+}
+.trumpCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.trickInsert {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 144px;
+}
+.scoreBoard {
+    font-size: 20px;
+    background: #f1ab4b85;
+    border-radius: 15px;
+    color: #3e3e3e;
+}
+.showScoreBoardBtn {
+    width: 150px !important;
+    color: #debd4f !important;
+    background: none !important;
+    border: none !important;
+    text-shadow: 1px 1px 2px black !important;
+    font-size: 25px !important;
+    -webkit-text-stroke-width: 1px !important;
+}
+.trumpSelect {
+    width: 250px;
+    color: white;
+    text-shadow: 1px 1px 2px #636464;
+    border-radius: 20px;
+    border: none;
+    margin: 5px;
+    font-size: 350%;
+}
+#loadGameContainer {
+    padding-top: 35px;
+}
+#redTrump {
+    background-color: #b43d2c;
+    color: #f4a784;
+    backdrop-filter: blur(5px);
+}
+#yellowTrump {
+    background-color: #deab4f;
+    color: #f9e8a0;
+    backdrop-filter: blur(5px);
+}
+#greenTrump {
+    background-color: #23a959;
+    color: #80e69f;
+    backdrop-filter: blur(5px);
+}
+#blueTrump {
+    background-color: #4a83c1;
+    color: #aac3ee;
+    backdrop-filter: blur(5px);
+}
+@keyframes blink {
+    0% {
+        opacity: .2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .2;
+    }
+}
+.loading span {
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+}
+.loading span:nth-child(2) {
+    animation-delay: .2s;
+}
+.loading span:nth-child(3) {
+    animation-delay: .4s;
+}
+@keyframes fadeInOutAnimation {
+    0% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.fadeInOut {
+    cursor: pointer;
+    animation: fadeInOutAnimation 1s infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+#canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+#wizardGif {
+    margin: auto;
+    display: flex;
+}
+#waitingForPlayers {
+    background-color: #3e3e3e;
+    opacity: 90%;
+    z-index: 200;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    color: white;
+    font-size: 45px;
+    display: none;
+    place-items: center;
+}

@@ -1,26 +1,38 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import indexComponent from "@/components/indexComponent.vue";
+import PlayerAmount from "@/components/PlayerAmount.vue";
+
+import "../public/javascripts/main.js";
 
 export default {
+  data() { // TODO: change to computed protperty and fetch data from backend
+    return {
+      gameStatus: 'playerCount',
+      playerAmount: 3,
+      activePlayer: 1,
+      players:[],
+    }
+  },
   name: 'App',
   components: {
-    HelloWorld
+    indexComponent,
+    PlayerAmount,
+    //TopBar,
+    //HelloWorld
   }
 }
 </script>
 
+<template>
+  <indexComponent v-if="gameStatus==='Index'"></indexComponent>
+  <player-amount v-if="gameStatus==='playerCount'"></player-amount>
+
+
+</template>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import "./assets/style.css";
+body {
+  background-image: url('https://pbs.twimg.com/media/E6btcNMXoAMFHOF?format=jpg&name=large');
 }
 </style>
