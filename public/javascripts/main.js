@@ -82,10 +82,10 @@ function setTrump(color) {
 
 $(document).ready(function(){
     setInterval(addEventListeners,500);
+    // addEventListeners()
 });
 
 function addEventListeners() {
-    console.log("settingUpEvents");
     $("#playerHandCards").on("click", ".animated-card", function() {
         playCard($(this).index());
     });
@@ -104,12 +104,22 @@ function addEventListeners() {
         console.log("Set Player Count : " + ev.target.innerText)
         sendPlayerCount(ev.target.innerText)
     })
-    var superUltraRoot = document.querySelector('wizard-as-a-webapp-player-amount').shadowRoot;
-    var potatoDiv = superUltraRoot.querySelector('.pla');
-    potatoDiv.addEventListener('click', function(ev) {
-        console.log("Set Player Count : " + ev.target.innerText)
-        sendPlayerCount(ev.target.innerText)
-    });
+
+    try {
+        document.querySelector('wizard-as-a-webapp-player-amount').shadowRoot.querySelector('.pla').addEventListener('click', function (ev) {
+            console.log("Set Player Count : " + ev.target.innerText)
+            sendPlayerCount(ev.target.innerText)
+        });
+    } catch (x) {};
+
+    try {
+        document.querySelector('wizard-as-a-webapp-player-name-input').shadowRoot.querySelector('#name').addEventListener('keydown', function(ev) {
+            console.log("Set Player Name")
+            if (ev.key === "Enter") {
+                setName(ev.target.value)
+            }
+        });
+    } catch (x) {};
 
     $("#name").keydown(function(ev) {
         console.log("Set Player Name")

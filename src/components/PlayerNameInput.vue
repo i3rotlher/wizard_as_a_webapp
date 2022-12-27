@@ -22,6 +22,7 @@ export default {
   min-height: 100vh; /* These two lines are counted as one :-)       */
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .playerName {

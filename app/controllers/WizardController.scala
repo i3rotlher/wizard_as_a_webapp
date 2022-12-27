@@ -127,7 +127,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     res = res.substring(0, res.length-1)
     res += "]}"
 
-    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table, res))
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table))
   }
 //
 //  def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>
@@ -181,8 +181,8 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     playedRes += "]}"
     if (playedList.length == 0) playedRes = "{cards: []}"
 
-    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath, controller.getGamestate().getTrump_card, playedRes, controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
-      controller.getGamestate().getPlayers, res))
+    Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath, controller.getGamestate().getTrump_card, controller.getGamestate().getPlayedCards ,controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
+      controller.getGamestate().getPlayers))
   }
 
   def howTo() = Action { implicit request: Request[AnyContent] =>

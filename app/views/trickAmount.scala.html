@@ -2,15 +2,58 @@
 @import de.htwg.se.wizard.model.cardsComponent.Card
 @import de.htwg.se.wizard.model.gamestateComponent.GamestateBaseImpl.Round
 
-@(player: Player, trump: Card, getCardPath: GetCardPath.type, players: List[Player], rounds: List[Round], cards: String)
+@(player: Player, trump: Card, getCardPath: GetCardPath.type, players: List[Player], rounds: List[Round])
 @main("marketPlaceBackground") {
     <div class="container-fluid">
-        <div class="row" id="top-bar-container">
-            <top-bar player="@player.name" phase="Guess Trick Amount"></top-bar>
+        <div class="row">
+            <div class="col-2">
+                <h1 id="playerNameTopLeft">@player.name's Turn</h1>
+            </div>
+            <div class="col-8">
+                <h1 class="actionDescription">Phase: Trick Prediction</h1>
+            </div>
+            <div class="col-2">
+                    <!-- Button trigger modal -->
+                <button type="button" class="showScoreBoardBtn btn btn-secondary" data-bs-toggle="modal" data-bs-target="#scoreBoardModal">
+                    <i class="bi bi-table"></i><br>
+                    Score
+                </button>
+            </div>
         </div>
-        <div class="row row-cols-3" id="guess-row-container">
-            <guess-row path="@getCardPath.getTotalPath(trump)"></guess-row>
-            <cards-row :cards="@cards"></cards-row>
+
+        <div class="row row-cols-3">
+            <div class="trickInsert col-8">
+                @*                <h3>Player: @player.name</h3>*@
+                <h2 style="text-align: start">How many tricks are you going to make?</h2>
+                <input
+                class="form-control"
+                type="number"
+                id="tricks"
+                value="0"
+                min="0"
+                style="width: fit-content"
+                />
+            </div>
+            <div class="trumpCard col-4">
+                <h2>Trump Card:</h2>
+                <img class="playingCard trump"
+                src="@routes.Assets.versioned(getCardPath.getCardPath(trump))"
+                />
+            </div>
+            <div class="col-12">
+                <div class="playCardBackground">
+                    <div class="animated-card-hand-container">
+                        <div id="playerHandCardsTrick" class="animated-card-hand">
+                        @for(card <- player.hand) {
+                            <div class="animated-card">
+                                <img class="playingCard"
+                                src="@routes.Assets.versioned(getCardPath.getCardPath(card))" />
+                            </div>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -35,7 +78,7 @@
                         <tbody>
                         @for((round, i) <- rounds.zipWithIndex.dropRight(1)) {
                             <tr>
-                                <td scope="row">@(rounds.indexOf(round)+1)</td>
+                                <th scope="row">@( )</th>
                                 @for(idx <- players.indices) {
                                     <td>
                                         @round.results(idx) | @round.guessed_tricks(idx)
