@@ -1,7 +1,10 @@
 
 <template>
   <div class="hor">
-    <button type="button" class="pla">{{title}}</button>
+    <button type="button" class="pla">3</button>
+    <button type="button" class="pla">4</button>
+    <button type="button" class="pla">5</button>
+    <button type="button" class="pla">6</button>
   </div>   
 </template>
 

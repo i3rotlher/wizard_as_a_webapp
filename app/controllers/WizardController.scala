@@ -198,10 +198,10 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     Ok(views.html.roundOver(controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
       controller.getGamestate().getPlayers,trump))
   }
-//
-//  def getHi() = Action { implicit request: Request[AnyContent] =>
-//    Ok(views.html.hi("Test"))
-//  }
+
+  def getHi() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.hi("Test"))
+  }
 
   var connected_players = 0
   def socket: Handler = {

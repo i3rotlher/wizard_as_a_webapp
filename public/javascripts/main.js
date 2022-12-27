@@ -81,10 +81,11 @@ function setTrump(color) {
 // Events -----------------
 
 $(document).ready(function(){
-    addEventListeners()
+    setInterval(addEventListeners,500);
 });
 
 function addEventListeners() {
+    console.log("settingUpEvents");
     $("#playerHandCards").on("click", ".animated-card", function() {
         playCard($(this).index());
     });
@@ -100,9 +101,15 @@ function addEventListeners() {
     })
 
     $(".pla").click(function(ev) {
-        console.log("Set Player Count")
+        console.log("Set Player Count : " + ev.target.innerText)
         sendPlayerCount(ev.target.innerText)
     })
+    var superUltraRoot = document.querySelector('wizard-as-a-webapp-player-amount').shadowRoot;
+    var potatoDiv = superUltraRoot.querySelector('.pla');
+    potatoDiv.addEventListener('click', function(ev) {
+        console.log("Set Player Count : " + ev.target.innerText)
+        sendPlayerCount(ev.target.innerText)
+    });
 
     $("#name").keydown(function(ev) {
         console.log("Set Player Name")
@@ -189,7 +196,7 @@ function reactToSocket(msg) {
 
 
 $(document).ready(function() {
-
+    if(document.getElementById('canvas') === null) return;
 // when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
 // not supported in all browsers though and sometimes needs a prefix, so we need a shim
     window.requestAnimFrame = (function () {
