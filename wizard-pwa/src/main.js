@@ -5,4 +5,4 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/css/globalstyle.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
-createApp(App).mount('#app')
+createApp(App).mount('#app') 

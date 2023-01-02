@@ -17,12 +17,9 @@ export default {
   },
   mounted () {
     document.body.classList.add('marketPlaceBackground');
-    this.idx = this.getIndex();
   },
-  data() {
-    return {
-      idx: "unknown"
-    }
+  props: {
+      idx: String
   },
 
 }

@@ -57,14 +57,10 @@ export default {
   },
   mounted () {
     document.body.classList.add('marketPlaceBackground');
-    this.playerName = this.getPlayerName();
-    this.hand = this.getHand();
   },
-  data() {
-    return {
-      playerName: "unknown",
+  props: {
+      playerName: String,
       hand: [],
-    }
   },
 
 }

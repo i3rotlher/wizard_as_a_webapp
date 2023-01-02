@@ -47,42 +47,6 @@
             </div>
         </div>
     </div>
-
-        <!-- Modal -->
-    <!-- <div class="modal fade" id="scoreBoardModal" tabindex="-1" aria-labelledby="Score" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="background: none; border: none;">
-                <div class="modal-header">
-                    @*                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>*@
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-striped scoreBoard">
-                        <thead>
-                            <tr>
-                                <th scope="col">Round</th>
-                                @for(player <- players) {
-                                    <th>@player.name</th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @for((round, i) <- rounds.zipWithIndex.dropRight(1)) {
-                            <tr>
-                                <th scope="row">@( )</th>
-                                @for(idx <- players.indices) {
-                                    <td>
-                                        @round.results(idx) | @round.guessed_tricks(idx)
-                                    </td>
-                                }
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </template>
 
 <script>

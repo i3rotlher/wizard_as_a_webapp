@@ -15,3 +15,5 @@ INFO: Unsupported notification method: $/setTrace
 2023.01.02 10:37:17 WARN  Build server is not auto-connectable.
 2023.01.02 10:37:44 ERROR Unexpected error initializing serverscala.concurrent.Future$$anon$2: Future.filter predicate is not satisfied
 
+Jan. 02, 2023 10:51:26 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
