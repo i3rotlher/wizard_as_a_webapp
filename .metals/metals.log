@@ -1,0 +1,17 @@
+2023.01.02 10:16:38 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at c:\Users\skill\IdeaProjects\wizard_as_a_webapp\.metals\lsp.trace.json or C:\Users\skill\AppData\Local\scalameta\metals\cache\lsp.trace.json
+2023.01.02 10:16:39 INFO  logging to file C:\Users\skill\IdeaProjects\wizard_as_a_webapp\.metals\metals.log
+2023.01.02 10:16:39 INFO  Started: Metals version 0.11.9 in workspace 'C:\Users\skill\IdeaProjects\wizard_as_a_webapp' for client Visual Studio Code 1.74.2.
+2023.01.02 10:16:40 INFO  time: initialize in 0.99s
+2023.01.02 10:16:41 WARN  Build server is not auto-connectable.
+2023.01.02 10:16:43 ERROR Unexpected error initializing serverscala.concurrent.Future$$anon$2: Future.filter predicate is not satisfied
+
+Jan. 02, 2023 10:17:20 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.01.02 10:37:06 INFO  shutting down Metals
+2023.01.02 10:37:15 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at c:\Users\skill\IdeaProjects\wizard_as_a_webapp\.metals\lsp.trace.json or C:\Users\skill\AppData\Local\scalameta\metals\cache\lsp.trace.json
+2023.01.02 10:37:15 INFO  logging to file C:\Users\skill\IdeaProjects\wizard_as_a_webapp\.metals\metals.log
+2023.01.02 10:37:15 INFO  Started: Metals version 0.11.9 in workspace 'C:\Users\skill\IdeaProjects\wizard_as_a_webapp' for client Visual Studio Code 1.74.2.
+2023.01.02 10:37:16 INFO  time: initialize in 0.96s
+2023.01.02 10:37:17 WARN  Build server is not auto-connectable.
+2023.01.02 10:37:44 ERROR Unexpected error initializing serverscala.concurrent.Future$$anon$2: Future.filter predicate is not satisfied
+
