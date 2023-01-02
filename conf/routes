@@ -11,7 +11,6 @@ GET     /                           controllers.WizardController.index()
 #GET     /hi                 controllers.WizardController.getHi()
 
 # POST ROUTES
-
 POST    /playerCount        controllers.WizardController.setPlayerCount(count: Int)
 GET     /playerCount        controllers.WizardController.getPlayerCountView()
 #

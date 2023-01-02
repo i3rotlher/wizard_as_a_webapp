@@ -190,6 +190,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
       controller = null
       connected_players = 0
       wui = null
+      println("Game reset!")
       Accepted("Game reset")
     }
   }

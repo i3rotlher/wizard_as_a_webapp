@@ -30,8 +30,8 @@
             </div>
             <div class="trumpCard col-4">
                 <h2>Trump Card:</h2>
-                <img class="playingCard trump"
-                :src="trumpCard"
+                <img class="playingCard trump" v-for="card in trumpCard" :key="card"
+                v-bind:src="card"
                 />
             </div>
             <div class="col-12">
@@ -52,29 +52,13 @@
 <script>
 export default {
   name: 'WishTrumpView',
-  methods: {
-    getPlayerName: function(){
-        return "Test"
-    },
-    getHand: function(){
-        return ["http://localhost:9000/assets//images/card-images/green6.png", "http://localhost:9000/assets//images/card-images/yellow6.png", "http://localhost:9000/assets//images/card-images/blue8.png"]
-    },
-    getRounds: function() {
-        return []
-    }
-  },
   mounted () {
     document.body.classList.add('marketPlaceBackground');
-    this.playerName = this.getPlayerName();
-    this.hand = this.getHand();
-    this.rounds = this.getRounds();
   },
-  data() {
-    return {
-      playerName: "unknown",
+  props: {
+      playerName: String,
       hand: [],
-      trumpCard: "http://localhost:9000/assets//images/card-images/green3.png",
-    }
+      trumpCard: [],
   },
 
 }

@@ -29,7 +29,7 @@
             <div class="col-4"></div>
             <div class="trumpCard col-4">
                 <h2>Trump Card:</h2>
-                <img class="playingCard trump" :src="trumpCard"/>
+                <img class="playingCard trump" :src="card" v-for="card in trumpCard" :key="card"/>
             </div>
             <div class="col-12">
                 <div class="playCardBackground">
@@ -53,7 +53,7 @@ export default {
     playerName: String,
     playedCards: [],
     hand: [],
-    trumpCard: String,
+    trumpCard: [],
   },
   mounted () {
     document.body.classList.add('marketPlaceBackground');

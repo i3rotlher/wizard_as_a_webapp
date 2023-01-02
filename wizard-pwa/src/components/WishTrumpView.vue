@@ -21,10 +21,10 @@
                     <div class="container h-100">
                         <h1>A Wizard is Trump! You can wish a Trumpcolor:</h1>
                         <div class="text-center">
-                            <button class="trumpSelect" id="yellowTrump" onclick="setTrump('yellow')">Yellow</button>
-                            <button class="trumpSelect" id="greenTrump" onclick="setTrump('green')">Green</button>
-                            <button class="trumpSelect" id="blueTrump" onclick="setTrump('blue')"> Blue</button>
-                            <button class="trumpSelect" id="redTrump" onclick="setTrump('red')">Red</button>
+                            <button class="trumpSelect" id="yellowTrump" value="yellow">Yellow</button>
+                            <button class="trumpSelect" id="greenTrump" value="green">Green</button>
+                            <button class="trumpSelect" id="blueTrump" value="blue"> Blue</button>
+                            <button class="trumpSelect" id="redTrump" value="red">Red</button>
                         </div>
                     </div>
                 </div>
@@ -47,14 +47,6 @@
 <script>
 export default {
   name: 'WishTrumpView',
-  methods: {
-    getPlayerName: function(){
-        return "Test"
-    },
-    getHand: function(){
-        return ["http://localhost:9000/assets//images/card-images/green6.png", "http://localhost:9000/assets//images/card-images/yellow6.png", "http://localhost:9000/assets//images/card-images/blue8.png"]
-    },
-  },
   mounted () {
     document.body.classList.add('marketPlaceBackground');
   },

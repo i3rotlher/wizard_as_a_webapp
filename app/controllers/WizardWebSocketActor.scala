@@ -2,6 +2,7 @@ package controllers
 
 import akka.actor.{Actor, ActorRef}
 import de.htwg.se.wizard.control.controllerBaseImpl.{player_create, _}
+import de.htwg.se.wizard.model.cardsComponent.Card
 import play.api.libs.json._
 
 import scala.swing.Reactor
@@ -129,18 +130,58 @@ class WizardWebSocketActor(out: ActorRef, controller: Controller, playerIdx: Int
   }
 
 
+  def getCardPath(card: Card): String = {
+    var result = "http://localhost:9000/assets//images/card-images/";
+    if (card.num == 0) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-fool.png"
+    }
+    if (card.num == 14) {
+      result += card.colour.substring(card.colour.indexOf('(') + 1, card.colour.indexOf(')'))
+      return result + "-wizard.png"
+    }
+    result += card.colour
+    result + card.num + ".png"
+  }
+
+  implicit val cardWrite = new Writes[Card] {
+    override def writes(c: Card): JsValue = Json.obj(
+      "url" -> getCardPath(c),
+    )
+  };
+
+  def sendCards(): JsObject = {
+    var hand_list = List[String]()
+    controller.getGamestate().getPlayers(controller.active_player_idx()).hand.foreach(card => hand_list = hand_list.appended('"' + getCardPath(card) + '"'))
+    val hand = hand_list.mkString("[", ",", "]")
+
+    var played_list = List[String]()
+    controller.getGamestate().getPlayedCards.foreach(card => played_list = played_list.appended('"' + getCardPath(card) + '"'))
+    val played = played_list.mkString("[", ",", "]")
+
+    return Json.obj("event" -> "cardUpdate", "trump" -> ("[" + '"' + getCardPath(controller.getGamestate().getTrump_card) + '"' + "]"),
+      "hand" -> hand,
+      "played" -> played
+    )
+  }
+
   def receive = {
     case msg: String =>
-      println(controller)
-      if (msg == "whoAmI") {
-        out ! Json.obj("whoAmI" -> playerIdx).toString()
-      } else {
+      if (msg == "cards") {
         println("Player: " + playerIdx + " send: " + msg)
         println("Active Player: " + controller.active_player_idx())
-        if (playerIdx == controller.active_player_idx()) {
-          if (msg != "MyTurn?") processInput(msg)
+        out ! sendCards().toString()
+      } else {
+        if (msg == "whoAmI") {
+          out ! Json.obj("whoAmI" -> playerIdx).toString()
+        } else {
+          println("Player: " + playerIdx + " send: " + msg)
+          println("Active Player: " + controller.active_player_idx())
+          if (playerIdx == controller.active_player_idx()) {
+            if (msg != "MyTurn?") processInput(msg)
+          }
+          else out ! Json.obj("event" -> "NotYourTurn", "activePlayer" -> controller.get_player(controller.active_player_idx()).name).toString()
         }
-        else out ! Json.obj("event" -> "NotYourTurn", "activePlayer" -> controller.get_player(controller.active_player_idx()).name).toString()
       }
   }
 }
