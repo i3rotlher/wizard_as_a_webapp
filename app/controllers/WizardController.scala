@@ -63,9 +63,9 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     if (controller == null) {
       controller =  Controller(Gamestate(), Impl_JSON())
       wui = new WebUI(controller)
-      Ok(views.html.index())
+      Ok(views.html.index()).enableCors
     } else {
-      NotAcceptable("Game already running!")
+      NotAcceptable("Game already running!").enableCors
     }
 
   }
@@ -74,10 +74,10 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
     if(wui.getState() == null) {
       controller.publish(new game_started)
     }
-    Redirect("/playerCount")
+    Redirect("/playerCount").enableCors
   }
   def setNameView()=Action{
-      Ok(views.html.playerName(connected_players + 1))
+      Ok(views.html.playerName(connected_players + 1)).enableCors
   }
 //  def setName(name: String) = Action {
 //    controller.create_player(name)
@@ -94,10 +94,10 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 
   def setPlayerCount(count: Int) = Action { implicit request: Request[AnyContent] =>
     controller.set_player_amount(Option(count))
-    Ok(views.html.playerName(controller.active_player_idx()+1))
+    Ok(views.html.playerName(controller.active_player_idx()+1)).enableCors
   }
   def getPlayerCountView()  = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.playerCount())
+    Ok(views.html.playerCount()).enableCors
   }
 
 //  def setTrump(color: String) = Action { implicit request: Request[AnyContent] =>
@@ -107,7 +107,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 //  }
   def getTrump() = Action { implicit request: Request[AnyContent] =>
     val player = controller.get_player((controller.active_player_idx()-1+controller.player_amount())%controller.player_amount())
-    Ok(views.html.trump(player, GetCardPath))
+    Ok(views.html.trump(player, GetCardPath)).enableCors
   }
 //
 //  def setTrickAmount(amount: Int) = Action { implicit request: Request[AnyContent] =>
@@ -119,7 +119,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 //    }
 //  }
   def getTrickAmount() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table))
+    Ok(views.html.trickAmount(controller.get_player(controller.active_player_idx()), controller.getGamestate().getTrump_card, GetCardPath, controller.getGamestate().getPlayers, controller.getGamestate().getGame_table)).enableCors
   }
 //
 //  def playCard(idx: Int) = Action { implicit request: Request[AnyContent] =>
@@ -148,21 +148,21 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
 //  }
   def playCardView() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.showCards(controller.get_player(controller.active_player_idx()), GetCardPath, controller.getGamestate().getTrump_card, controller.getGamestate().getPlayedCards, controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
-      controller.getGamestate().getPlayers))
+      controller.getGamestate().getPlayers)).enableCors
   }
 
   def howTo() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.howToPlay())
+    Ok(views.html.howToPlay()).enableCors
   }
 
   def trickOver() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.trickOver(controller.get_mini_winner(), !wui.getState().isInstanceOf[next_player_card]))
+    Ok(views.html.trickOver(controller.get_mini_winner(), !wui.getState().isInstanceOf[next_player_card])).enableCors
   }
 
   def roundOver() = Action { implicit request: Request[AnyContent] =>
     val trump = if (wui.getState().isInstanceOf[set_Wizard_trump]) true else false
     Ok(views.html.roundOver(controller.getGamestate().getGame_table, controller.getGamestate().getRound_number,
-      controller.getGamestate().getPlayers,trump))
+      controller.getGamestate().getPlayers,trump)).enableCors
   }
 //
 //  def getHi() = Action { implicit request: Request[AnyContent] =>
@@ -181,7 +181,7 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
       }
     } else {
       Action { implicit request: Request[AnyContent] =>
-        NotAcceptable("Too many players")
+        NotAcceptable("Too many players").enableCors
       }
     }
   }
@@ -191,10 +191,18 @@ class WizardController @Inject()(val controllerComponents: ControllerComponents)
       connected_players = 0
       wui = null
       println("Game reset!")
-      Accepted("Game reset")
+      Accepted("Game reset").enableCors
     }
   }
 
+  implicit class RichResult(result: Result) {
+    def enableCors = result.withHeaders(
+      "Access-Control-Allow-Origin" -> "*"
+      , "Access-Control-Allow-Methods" -> "OPTIONS, GET, POST, PUT, DELETE, HEAD" // OPTIONS for pre-flight
+      , "Access-Control-Allow-Headers" -> "Accept, Content-Type, Origin, X-Json, X-Prototype-Version, X-Requested-With" //, "X-My-NonStd-Option"
+      , "Access-Control-Allow-Credentials" -> "true"
+    )
+  }
 }
 
 object WizardWebSocketActorFactory {
