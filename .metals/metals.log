@@ -25,3 +25,5 @@ INFO: Unsupported notification method: $/setTrace
 2023.01.02 15:53:30 INFO  Started: Metals version 0.11.9 in workspace 'C:\Users\skill\IdeaProjects\wizard_as_a_webapp' for client Visual Studio Code 1.74.2.
 2023.01.02 15:53:32 INFO  time: initialize in 1.1s
 2023.01.02 15:53:33 WARN  Build server is not auto-connectable.
+Jan. 02, 2023 8:31:58 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

@@ -9,3 +9,4 @@ null
 /.settings
 /RUNNING_PID
 public/images/card-images/*
+.metals/metals.log
